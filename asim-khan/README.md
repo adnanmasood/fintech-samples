@@ -74,3 +74,76 @@ coverage/payout word (`approve`, `deny`, `decline`, `pay`).
 All claim data (`CLM-1001`, `CLM-1002`, policy IDs, document names) is fictional,
 written for this demo. No real customer or policy data is used anywhere in this
 folder.
+
+---
+
+## Optional stretch: web UI
+
+Beyond the graded minimum above, this folder also has a small FastAPI web front end
+(`app.py` + `templates/` + `static/`) so the completeness checker can be driven from a
+browser instead of only the console demo. It's optional — the graded part is
+`main.py`/`test_main.py` above, unchanged and untouched by any of this.
+
+### Tech stack, and why
+
+| Layer | What |
+|---|---|
+| Backend | FastAPI + Uvicorn |
+| Templating | Jinja2 (server-rendered HTML, no JS framework) |
+| Styling | Plain CSS (`static/style.css`), IBM Plex fonts |
+| Testing | `pytest` + FastAPI's `TestClient` (`tests/test_app.py`) |
+| State | In-memory dict (`app.CLAIMS`) — a stand-in for a real database, resets on restart |
+
+**FastAPI + Jinja2 was picked over Flutter Web or a NestJS backend for a few concrete
+reasons, not just "it's what was already installed":**
+
+- **Same language as the logic it's wrapping.** `app.py` imports `check_claim`
+  directly from `main.py` — no network call, no serialization boundary, no second
+  language. A Flutter or separate-Node front end would need the backend turned into a
+  JSON API first (a fine change, just extra work with no functional benefit yet).
+- **Zero new tooling.** FastAPI/Jinja2/Uvicorn were already in the shared
+  `claude-work/.venv` from Class 2's agent app; only `python-multipart` (form parsing)
+  and `pytest` were added.
+- **It's the industry default for exactly this kind of AI-adjacent backend.** FastAPI
+  is the framework used across most real-world "wrap model logic in an API" work
+  (OpenAI's own examples, Hugging Face inference endpoints, LangServe, vLLM's serving
+  layer) — precisely because Python is the AI ecosystem's language, so the API layer
+  and the model/data code share one process and one language.
+- **NestJS is a backend peer to FastAPI, not an alternative to Jinja2/Flutter** — same
+  job (routing, validation, async I/O), different language (TypeScript vs. Python).
+  Picking it here would mean rewriting `check_claim()` in TypeScript for no gain, since
+  nothing in this project needs Node's ecosystem specifically.
+- **Flutter is a frontend peer to Jinja2, not to FastAPI** — it's a UI toolkit (Dart),
+  not a backend. Using it would mean keeping FastAPI underneath (converted to return
+  JSON instead of HTML) and rebuilding the 3 screens in Dart on top. Reasonable if this
+  becomes a real mobile+web app later; not needed to satisfy the assignment.
+- **Scaling profile is the same as the alternatives that matter here.** FastAPI and
+  NestJS are both async, stateless-by-default, and scale horizontally the same way
+  (more processes/containers behind a load balancer) — nothing is given up by choosing
+  Python over Node for this.
+
+### Run the web UI
+
+```bash
+../../../.venv/Scripts/python.exe -m uvicorn app:app --reload
+```
+
+Then open `http://127.0.0.1:8000/`. `--reload` isn't required, just convenient
+during development.
+
+### Test the web UI
+
+```bash
+../../../.venv/Scripts/python.exe -m pytest tests/test_app.py -v
+```
+
+6 tests covering the form page, a complete-claim submission (redirects to
+`READY_FOR_REVIEW`), an incomplete one (names the missing field), an unknown claim ID
+(404), and the claims list (populated and empty states).
+
+### What's real vs. stubbed
+
+Only the completeness check is real logic. Document storage, AI extraction, AI
+summary generation, adjuster review, persistence, and notifications are not built yet
+— see `../../HANDOFF.md` and `../../LECTURE-SUMMARY.md` for the full build roadmap and
+where this UI fits into the eventual end-to-end pipeline.

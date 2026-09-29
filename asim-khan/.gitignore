@@ -11,3 +11,8 @@ __pycache__/
 *.egg-info/
 build/
 dist/
+
+# Local dev server runtime artifacts (not app output, just process bookkeeping)
+server.log
+server.pid
+.pytest_cache/
