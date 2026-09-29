@@ -143,7 +143,8 @@ during development.
 
 ### What's real vs. stubbed
 
-Only the completeness check is real logic. Document storage, AI extraction, AI
-summary generation, adjuster review, persistence, and notifications are not built yet
-— see `../../HANDOFF.md` and `../../LECTURE-SUMMARY.md` for the full build roadmap and
-where this UI fits into the eventual end-to-end pipeline.
+Only the completeness check is real logic. The full Design Deliverable calls for
+seven more stages: document/evidence storage, an AI fact extractor, an AI summary
+generator, an adjuster review step, a persistent claims database (replacing the
+in-memory store this UI currently uses), a notification service, and finally wiring
+all of it into one pipeline. None of those are built yet.
