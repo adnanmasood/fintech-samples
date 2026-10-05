@@ -90,8 +90,8 @@ async def auth_callback(request: Request):
 
 @router.get("/logout")
 def logout(request: Request):
-    # Pop only this role's key -- request.session.clear() would also wipe an
-    # independent adjuster session sharing the same cookie, which is exactly
+    # Pop only this role's key -- request.session.clear() would also wipe
+    # an independent adjuster session sharing the same cookie, which is exactly
     # the cross-contamination separation of duties is supposed to prevent.
     email = request.session.pop("user_email", None)
     if email:
