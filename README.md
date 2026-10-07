@@ -6,7 +6,7 @@
   <a href="https://github.com/adnanmasood/fintech-samples/actions"><img alt="Release checks" src="https://github.com/adnanmasood/fintech-samples/actions/workflows/verify.yml/badge.svg"></a>
 </p>
 
-# USF AI in FinTech — Sample Projects
+# AI in FinTech Course — Sample Projects
 
 Instructor-created sample projects used in the **Fintech for AI course at the University of South Florida (USF)**, prepared independently by **Adnan Masood, PhD.** These examples connect financial decisions with algorithms, working software, verification, and clear explanations.
 
