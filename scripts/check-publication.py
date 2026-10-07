@@ -12,7 +12,7 @@ if args.staged:
     names = subprocess.check_output(['git', 'diff', '--cached', '--name-only', '--diff-filter=ACMR', '-z'], cwd=ROOT).decode().split('\0')
     files = [ROOT/n for n in names if n]
 elif args.dist:
-    files = [p for folder in ['fintech-algorithms/dist', 'project-0-payment-rails/site-dist'] for p in (ROOT/folder).rglob('*') if p.is_file()]
+    files = [p for folder in ['fintech-algorithms/dist', 'student-projects/project-0-payment-rails/site-dist'] for p in (ROOT/folder).rglob('*') if p.is_file()]
 else:
     files = [p for p in ROOT.rglob('*') if p.is_file() and not any(x in excluded for x in p.relative_to(ROOT).parts)]
 secrets = re.compile(r'(?<![A-Za-z0-9])(?:gh[pousr]_[A-Za-z0-9]{30,}|sk-(?:proj-)?[A-Za-z0-9_-]{30,}|AKIA[A-Z0-9]{16}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)')
@@ -50,7 +50,12 @@ for p in files:
         # Pinned vendor files retain their own public source examples and notices.
         vendor = any(x in rel.parts for x in ['python', 'licenses', 'labs']) and ('public' in rel.parts or args.dist)
         if not vendor and secrets.search(text): failures.append(f'{rel}: possible credential')
-        if rel.parts[0] == 'student-projects' and email.search(text): failures.append(f'{rel}: email in student submission')
+        # example.com is reserved for documentation; existing fictional fixtures
+        # may use it. Other domains, including subdomains, remain flagged.
+        if rel.parts[0] == 'student-projects' and any(
+            match.group().rsplit('@', 1)[1].lower() != 'example.com'
+            for match in email.finditer(text)
+        ): failures.append(f'{rel}: email in student submission')
         if rel.parts[0] == 'student-projects' and re.search(r'/(?:Users|home)/[^/\s]+/', text): failures.append(f'{rel}: private local path')
     if args.dist and p.name == 'payment-rails-source.zip':
         with zipfile.ZipFile(p) as z:

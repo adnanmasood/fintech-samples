@@ -57,3 +57,9 @@ The illustrative $50 purchase shows a $50 authorization hold, a $450 posted paye
 - The simulator remains local; its Python code and APIs are unchanged. Docker launch was documented but not executed because the local Docker daemon was not running. No paid services, GitHub integration, hosted payment backend, or student accounts were added.
 
 These README and release-record updates do not change the deployed application files. Later GitHub commits may include documentation or student contributions; the application commit above identifies the code actually published.
+
+## Repository reorganization
+
+The current repository places the existing loan-review and fraud-screening submissions at `student-projects/ahmad-abuadas/` and `student-projects/huei-en-cho/`. The Payment Rails instructor sample now lives at `student-projects/project-0-payment-rails/`. The [project index](../student-projects/README.md) links to all three.
+
+The paths and verification results above describe the historical published application commit. This move updates repository documentation, the guide source link, and repository check paths. Vercel settings, deployment configuration, export utilities, and published artifacts remain unchanged. No builds, PDF regeneration, or archive regeneration were performed for this move. The already published Payment Rails guide retains its earlier GitHub source link until a future deployment.
