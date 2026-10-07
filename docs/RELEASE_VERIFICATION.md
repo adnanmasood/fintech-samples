@@ -1,6 +1,13 @@
 # Publication verification
 
-Prepared on **6 October 2026** from the instructor's course applications. Only the two selected reference projects and public contribution documentation were imported into the existing repository. This release publishes the source and documentation to GitHub. Further Vercel release work was deferred at the instructor's request.
+Prepared on **6 October 2026** from the instructor's course applications. Only the two selected reference projects and public contribution documentation were imported into the existing repository. The reference websites were published on **7 October 2026** from merged application commit [`7b8df04e540ab76ab17c07abc5b0e26b49d35175`](https://github.com/adnanmasood/fintech-samples/commit/7b8df04e540ab76ab17c07abc5b0e26b49d35175).
+
+| Website | Public URL | Verified production artifact |
+|---|---|---|
+| Fintech Algorithms | [Open the learning app](https://usf-fintech-algorithms.vercel.app) | `dpl_5LAWk9kdPWG5MPdeFtn3DiRyYBPo` |
+| Payment Rails | [Open the project guide](https://usf-payment-rails.vercel.app) | `dpl_F7TR9MRnboLDTFSchNYYWkKRymZd` |
+
+Both standard domains return HTTP 200 without Vercel authentication. Protected previews were tested with short-lived OIDC headers scoped to the deployment origin. Production builds were staged with `--prod --skip-domain`, checked through authenticated Vercel HTTP access, and promoted without rebuilding. Domain inspection confirms that each public site serves the exact checked production artifact.
 
 ## Fintech Algorithms
 
@@ -22,7 +29,7 @@ Clean-checkout testing identified a required OpenBLAS ZIP excluded by an archive
 
 | Check | Result |
 |---|---|
-| Python suite | 22 passed, including financial rules, exact fee arithmetic, six-process integration, HTTP commands, launcher startup, and shutdown |
+| Python suite | 25 passed, including financial rules, exact fee arithmetic, six-process integration, HTTP commands, launcher startup, shutdown, and source packaging |
 | Static guide | Built successfully with the selected PDFs, diagrams, screenshots, and downloadable source ZIP |
 | Desktop/mobile | Checked at 1,440 px and 390 px; no page overflow, serious automated accessibility findings, or browser errors |
 | Links/downloads | Internal links, anchors, PDF downloads, images, and source download verified locally |
@@ -33,9 +40,20 @@ The illustrative $50 purchase shows a $50 authorization hold, a $450 posted paye
 ## Privacy and release controls
 
 - Private course folders, individual assignment packets, raw authoring sources, caches, dependencies, local configuration, generated QA, and old distributions are excluded.
-- A private roster comparison found no known student-name matches in the selected source files or PDF text. The comparison list is not published.
+- The original private roster comparison found no known student-name matches in the selected instructor source files or PDF text. The comparison list is not published.
 - Screenshots, notebook examples, course datasets, and payment fixtures contain fictional demonstration data. No learner progress, student records, grades, or real financial records are included.
-- Source and deployment inventories passed the publication check. Required Python archives and component license notices are retained.
+- Source and deployment inventories passed the publication check. The CLI upload contains 1,244 regular files; its paths and hashes exactly match the isolated instructor export. Vercel's received source inventory was also compared with the dry-run upload inventory. Required Python archives and component license notices are retained.
 - Instructor authorship and the repository's existing license history are preserved. Public GitHub identities and commit metadata remain visible.
 
-[Repository CI](https://github.com/adnanmasood/fintech-samples/actions/workflows/verify.yml) repeats content validation, type checks, unit tests, the full browser suite, notebook execution, Payment Rails tests, and publication checks. The full application verification suite passed in [GitHub CI](https://github.com/adnanmasood/fintech-samples/actions/runs/37541189906). Hosting verification is outside this GitHub release.
+[Repository CI](https://github.com/adnanmasood/fintech-samples/actions/workflows/verify.yml) repeats content validation, type checks, unit tests, the full browser suite, notebook execution, Payment Rails tests, and publication checks. The full suite passed for the packaging PR and for the [merged application commit in GitHub CI](https://github.com/adnanmasood/fintech-samples/actions/runs/37569514280): 756 unit tests, 301 browser tests, 12 notebook examples, and 25 Payment Rails tests.
+
+## Hosted verification
+
+- Fresh unauthenticated production browser contexts passed at 1,440 px and 390 px, with no page errors, horizontal overflow, or serious/critical automated accessibility findings on the checked pages. Keyboard skip links, course search, deep links, and persisted defense responses were verified.
+- The public Algorithms site completed its real Python baseline and executed the logistic regression notebook in JupyterLite. The browser check waits for kernel readiness and active code-cell selection before running the notebook. Normal service-worker behavior is preserved.
+- All Payment Rails anchors, images, PDF links, and the source download passed on the public site. The published ZIP contents exactly match the audited, tested preview/staged package; its 55 members contain the Docker-ignore policy, guide build inputs, manifests, and license.
+- The actual preview source download passed all 25 tests after extraction and rebuilt the static guide. The missing-`.dockerignore` build, policy drift rejection, and missing-required-input rejection passed in CI.
+- The deployment export admits only committed `fintech-algorithms/`, `project-0-payment-rails/`, `LICENSE`, and `.vercelignore`. Existing student contributions, including folders outside `student-projects/`, are excluded. No Git metadata, dependencies, local environment/configuration, old distributions, or generated QA are uploaded.
+- The simulator remains local; its Python code and APIs are unchanged. Docker launch was documented but not executed because the local Docker daemon was not running. No paid services, GitHub integration, hosted payment backend, or student accounts were added.
+
+These README and release-record updates do not change the deployed application files. Later GitHub commits may include documentation or student contributions; the application commit above identifies the code actually published.

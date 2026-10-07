@@ -1,8 +1,8 @@
 <p align="center"><img src="docs/assets/banner.svg" alt="AI in FinTech — Learn. Build. Explain." width="100%"></p>
 
 <p align="center">
-  <a href="fintech-algorithms/"><img alt="Fintech Algorithms source" src="https://img.shields.io/badge/Source-Fintech_Algorithms-00543C"></a>
-  <a href="project-0-payment-rails/"><img alt="Payment Rails source" src="https://img.shields.io/badge/Source-Payment_Rails-786A32"></a>
+  <a href="https://usf-fintech-algorithms.vercel.app"><img alt="Open Fintech Algorithms" src="https://img.shields.io/badge/Live-Fintech_Algorithms-00543C"></a>
+  <a href="https://usf-payment-rails.vercel.app"><img alt="Open Payment Rails guide" src="https://img.shields.io/badge/Live-Payment_Rails-786A32"></a>
   <a href="https://github.com/adnanmasood/fintech-samples/actions"><img alt="Release checks" src="https://github.com/adnanmasood/fintech-samples/actions/workflows/verify.yml/badge.svg"></a>
 </p>
 
@@ -14,16 +14,16 @@ This is an independent teaching repository, not an official University of South 
 
 ## Explore the projects
 
-| Project | What you can learn | Code & instructions |
-|---|---|---|
-| **Fintech Algorithms** | Twelve AI algorithms, evaluation measures, guided exercises, interactive visuals, browser Python, and editable notebooks | [Source & quick start](fintech-algorithms/) |
-| **Project 0: Payment Rails Live** | Six payment participants and the path from authorization to merchant settlement | [Python reference & guide](project-0-payment-rails/) |
+| Project | What you can learn | Live website | Code & instructions |
+|---|---|---|---|
+| **Fintech Algorithms** | Twelve AI algorithms, evaluation measures, guided exercises, interactive visuals, browser Python, and editable notebooks | [Open the learning app](https://usf-fintech-algorithms.vercel.app) | [Source & quick start](fintech-algorithms/) |
+| **Project 0: Payment Rails Live** | Six payment participants and the path from authorization to merchant settlement | [Open the project guide](https://usf-payment-rails.vercel.app) | [Python reference & guide](project-0-payment-rails/) |
 
 **Fintech Algorithms** is a static Astro/Svelte application. It covers logistic regression, trees and forests, gradient boosting, time series, clustering, anomaly detection, graph methods, transformers, retrieval-augmented generation, optimization, reinforcement learning, and Monte Carlo simulation. Its teaching activities combine numerical work, model selection, financial consequences, and limitations.
 
 Learner progress stays in browser storage. Ordinary visits load the pages and tools you use. Choose **Make available offline** to download the complete course; the control shows the size and progress, supports retry and updates, and allows removal while preserving learning progress.
 
-**Payment Rails Live** is a Python reference implementation with six participant processes and a browser dashboard. The included static guide explains the project and provides PDFs and a source download when built locally. Run the simulator on your own computer to interact with its messages and fictional balances.
+**Payment Rails Live** is a Python reference implementation with six participant processes and a browser dashboard. The hosted static guide explains the project and provides PDF guides, diagrams, reviewed screenshots, and a complete source download. Run the simulator on your own computer to interact with its messages and fictional balances.
 
 ```mermaid
 flowchart LR
@@ -128,7 +128,9 @@ Claude Code can help create a PR through GitHub CLI. Review the code and generat
 
 Repository CI validates teaching content, types, unit and browser behavior, offline functionality, notebook execution, the payment simulator, and publication hygiene. [Release verification](docs/RELEASE_VERIFICATION.md) records the checks performed for this release.
 
-This release publishes the code and documentation on GitHub. Run the learning app, static project guide, and payment simulator locally using their project instructions. Browser Python runs on the learner's device, and the payment simulator runs locally. Optional Vercel configuration is retained for a future hosting release.
+Both instructor reference websites are published on Vercel. Browser Python and notebooks run on the learner's device; the Payment Rails simulator runs locally. The hosted guide does not run a payment backend or collect student accounts or grades.
+
+Vercel releases use the [instructor-only export](scripts/export-vercel-source.py) from a verified Git commit. The export admits only the two reference application directories and required licensing/configuration, so student submissions anywhere else in the repository are excluded. The latest deployed application commit and verification results are recorded in [release verification](docs/RELEASE_VERIFICATION.md).
 
 ## Rights and attribution
 
