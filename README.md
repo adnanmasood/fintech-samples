@@ -37,6 +37,22 @@ flowchart LR
 
 Authorization reserves funds; capture records the merchant's collection instruction; clearing posts the payer debit and the obligation due to the merchant; settlement credits the merchant. These are simplified teaching conventions. The simulator uses fictional funds and tokens, with in-memory state that resets when the session stops.
 
+## Course project catalog
+
+Project 0 is the instructor reference implementation. Projects 1–8 summarize the course project briefs. Fintech Algorithms is the supporting learning website and is separate from this project numbering.
+
+| Project | Title | Brief abstract |
+|---|---|---|
+| 0 | **Payment Rails Live** | Trace a fictional card payment through six participants and authorization, capture, clearing, and settlement. A local Python simulator makes messages, balances, retries, and illustrative fees visible. |
+| 1 | **Loan Application System** | Validate application evidence and income consistency before applying a mock lending policy. Present an approval or review outcome with clear reasons, including missing documents and unavailable scores. |
+| 2 | **Digital Wallet Transfer System** | Transfer fictional funds between wallets while preserving total balances. Validate requests, prevent duplicate transfers, detect conflicting retries, and display a transaction receipt. |
+| 3 | **Card Payment Fraud Screening System** | Apply an ordered policy to fictional card transactions using blocked-card checks and mock risk scores. Explain approval, challenge, or decline decisions and handle unavailable models. |
+| 4 | **Bank Account Onboarding System** | Compare fictional signup information with mock identity-document records. Detect missing fields and name or birth-date mismatches, then identify records ready for external verification. |
+| 5 | **Supplier Invoice Approval System** | Validate fictional invoice metadata and prevent duplicate intake using supplier and invoice identifiers. Create unique records pending approval while preserving the original invoice on resubmission. |
+| 6 | **Personal Budget Assistant** | Categorize fictional purchases from a CSV using transparent merchant rules and exact monetary arithmetic. Report category totals and reject invalid rows with useful explanations. |
+| 7 | **Insurance Claim Intake System** | Check fictional claims for required facts and evidence labels. List missing information and identify complete cases ready for adjuster review. |
+| 8 | **Investment Research Assistant** | Search a controlled collection of fictional reports and return matching evidence with file-and-line citations. Distinguish absent matches from unavailable searches. |
+
 ## Run locally
 
 ### Fintech Algorithms
