@@ -89,13 +89,13 @@ def clean_db():
     """
     storage.init_db()
     storage.reset()
-    storage.get_or_create_user("ui.claimant@example.com", "UI Test Claimant")
+    storage.get_or_create_user("ui.claimant", "UI Test Claimant")
     yield
 
 
 def _claimant_cookie_header() -> dict:
     signer = itsdangerous.TimestampSigner(os.environ["SESSION_SECRET_KEY"])
-    payload = base64.b64encode(json.dumps({"user_email": "ui.claimant@example.com"}).encode())
+    payload = base64.b64encode(json.dumps({"user_email": "ui.claimant"}).encode())
     return {"name": "session", "value": signer.sign(payload).decode(), "domain": "127.0.0.1", "path": "/"}
 
 

@@ -7,11 +7,16 @@ plus `claims.json` (five full claim scenarios and three validation-failure cases
 `seed_demo_data.py`, which turns that data into a populated, running system with one
 command.
 
-The fictional sample PDFs themselves are not included in this submission snapshot --
-see the live repo (github.com/i-asimkhan/harborclaim-insurance-intake/tree/main/sample_data)
-for those, plus `docs/screenshots/`. `claims.json` and `seed_demo_data.py` below are
-complete and runnable as-is once you supply your own copies of the six PDFs named in
-`claims.json`.
+## The documents
+
+| File | Triggers `incident_type` | Mentions |
+|---|---|---|
+| `police_report_sample.pdf` | Collision | `$1,850.00`, `2026-09-10`, `2026-09-11` |
+| `repair_estimate_sample.pdf` | (amounts/dates only) | `$2,400.00`, `$640.00`, `$1,200.00`, `$4,240.00`, `2026-09-12`, `2026-10-12` |
+| `water_damage_notes_sample.pdf` | Water damage | `$3,100.00`, `2026-08-21`, `2026-08-20` |
+| `theft_report_sample.pdf` | Theft | `$2,950.00`, `2026-09-02`, `2026-08-30`, `2026-09-01` |
+| `vandalism_report_sample.pdf` | Vandalism | `$5,600.00`, `2026-09-15`, `2026-09-14` |
+| `injury_claim_notes_sample.pdf` | Bodily injury | `$1,450.00`, `2026-09-18`, `2026-09-17` |
 
 ## `claims.json`
 
@@ -54,12 +59,22 @@ what makes `--reset` safe to run repeatedly.
 
 The script prints a result line per scenario (claim ID, actual vs. expected
 status, decision) and confirms each validation-failure case was genuinely
-rejected, not silently accepted.
+rejected, not silently accepted. To browse the result: provision your own
+adjuster login (`storage.create_adjuster('your.username', 'Your Name')`) --
+the seed script's own adjuster session was cookie-injected, so there's no
+real password for it to hand you. The seeded claimant emails are fictional
+(`@example.com`) and can't actually complete real Google sign-in; use the
+same cookie-injection technique if you need to view a seeded claimant's own
+pages directly.
 
 ## Try a single document by hand
 
-Run the app, sign in, go to **Submit a claim**, attach a fictional PDF or
-`.txt` file of your own with a dollar amount and an ISO date in it. After
-submitting, open the claim -- the **Extracted facts** table shows what the
-regex found, and the **Adjuster summary** restates it in a sentence. Both
-are tagged `MOCK` on the page; see `../MOCKS.md`.
+Run the app, sign in, go to **Submit a claim**, attach one of the PDFs above.
+After submitting, open the claim -- the **Extracted facts** table shows what
+the regex found in that file, and the **Adjuster summary** restates it in a
+sentence. Both are tagged `MOCK` on the page; see `../MOCKS.md`.
+
+All names, report numbers, policy numbers, and amounts are invented for this
+class project -- none of these are real documents or real people, and the
+"FICTIONAL DOCUMENT -- CLASSROOM USE ONLY" stamp is printed on every page for
+exactly that reason.

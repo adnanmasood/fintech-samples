@@ -5,7 +5,7 @@
     {
       "id": "collision-ready-approved",
       "label": "Straightforward collision, complete on first submission, later approved",
-      "claimant_email": "jordan.alvarez@example.com",
+      "claimant_email": "jordan.alvarez",
       "claimant_name": "Jordan Alvarez",
       "policy_id": "POL-10234",
       "incident_date": "2026-09-10",
@@ -18,7 +18,7 @@
     {
       "id": "theft-ready-declined",
       "label": "Theft claim, complete, later declined",
-      "claimant_email": "morgan.reyes@example.com",
+      "claimant_email": "morgan.reyes",
       "claimant_name": "Morgan Reyes",
       "policy_id": "POL-55891",
       "incident_date": "2026-09-02",
@@ -31,7 +31,7 @@
     {
       "id": "vandalism-ready-needs-more-review",
       "label": "Vandalism claim, complete, routed for further review",
-      "claimant_email": "casey.kim@example.com",
+      "claimant_email": "casey.kim",
       "claimant_name": "Casey Kim",
       "policy_id": "POL-70045",
       "incident_date": "2026-09-14",
@@ -44,7 +44,7 @@
     {
       "id": "water-damage-missing-incident-date",
       "label": "Water damage claim, submitted without an incident date",
-      "claimant_email": "jordan.alvarez@example.com",
+      "claimant_email": "jordan.alvarez",
       "claimant_name": "Jordan Alvarez",
       "policy_id": "POL-10567",
       "incident_date": "",
@@ -58,7 +58,7 @@
     {
       "id": "injury-no-documents",
       "label": "Injury claim, no supporting documents attached",
-      "claimant_email": "casey.kim@example.com",
+      "claimant_email": "casey.kim",
       "claimant_name": "Casey Kim",
       "policy_id": "POL-70099",
       "incident_date": "2026-09-17",
@@ -67,7 +67,7 @@
       "expected_status": "NEEDS_INFORMATION",
       "expected_missing": ["documents"],
       "adjuster_decision": null,
-      "covers": "the other way a claim can be incomplete -- all three text fields present and well-formed, zero documents attached. (injury_claim_notes_sample.pdf exists in the live repo and matches this scenario's story, but is deliberately NOT attached here -- that's the whole point of this case.)"
+      "covers": "the other way a claim can be incomplete -- all three text fields present and well-formed, zero documents attached. (injury_claim_notes_sample.pdf exists in this folder and matches this scenario's story, but is deliberately NOT attached here -- that's the whole point of this case.)"
     }
   ],
 
@@ -75,7 +75,7 @@
     {
       "id": "policy-id-too-long",
       "label": "Policy ID over the 40-character limit",
-      "claimant_email": "jordan.alvarez@example.com",
+      "claimant_email": "jordan.alvarez",
       "policy_id": "POL-THIS-ID-IS-DELIBERATELY-WAY-TOO-LONG-FOR-THE-FIELD",
       "incident_date": "2026-09-10",
       "description": "This submission should never be stored.",
@@ -86,7 +86,7 @@
     {
       "id": "future-incident-date",
       "label": "Incident date in the future",
-      "claimant_email": "morgan.reyes@example.com",
+      "claimant_email": "morgan.reyes",
       "policy_id": "POL-99999",
       "incident_date": "2099-01-01",
       "description": "An incident that, per the date given, has not happened yet.",
@@ -97,7 +97,7 @@
     {
       "id": "disallowed-file-type",
       "label": "Uploaded file type not on the allowlist",
-      "claimant_email": "casey.kim@example.com",
+      "claimant_email": "casey.kim",
       "policy_id": "POL-11111",
       "incident_date": "2026-09-10",
       "description": "A claim that tries to attach an executable instead of a document.",

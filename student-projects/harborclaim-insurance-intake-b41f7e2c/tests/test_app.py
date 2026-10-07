@@ -30,8 +30,8 @@ from auth import get_current_user
 
 client = TestClient(app_module.app)
 
-CLAIMANT = {"id": 1, "email": "claimant@example.com", "name": "Casey Claimant"}
-OTHER_CLAIMANT = {"id": 2, "email": "other@example.com", "name": "Other Person"}
+CLAIMANT = {"id": 1, "email": "claimant", "name": "Casey Claimant"}
+OTHER_CLAIMANT = {"id": 2, "email": "other", "name": "Other Person"}
 
 
 def setup_function(_):
@@ -90,9 +90,9 @@ def test_signed_out_new_claim_form_redirects_to_login_on_submit():
 
 def test_first_login_creates_an_account_behind_the_scenes():
     storage.reset()
-    assert storage.get_user("new-person@example.com") is None
-    storage.get_or_create_user("new-person@example.com", "New Person")
-    assert storage.get_user("new-person@example.com") is not None
+    assert storage.get_user("new-person") is None
+    storage.get_or_create_user("new-person", "New Person")
+    assert storage.get_user("new-person") is not None
 
 
 def test_signed_in_homepage_shows_the_submission_form():
@@ -314,7 +314,7 @@ def test_an_unlinked_adjuster_is_unaffected_by_the_conflict_check():
 
     # Linked to a *different* email than the claimant who filed this one --
     # the check should only ever fire on an exact match, never adjacent cases.
-    password = storage.create_adjuster("unrelated", linked_claimant_email="someone-else@example.com")
+    password = storage.create_adjuster("unrelated", linked_claimant_email="someone-else")
     login_as_adjuster("unrelated", password)
 
     allowed = client.post(
