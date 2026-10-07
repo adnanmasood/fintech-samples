@@ -62,6 +62,8 @@ python3 -m unittest discover -s tests -v
 
 Tests cover participant rules, actual process exchange, balances at each stage, duplicates, conflicts, batching, reset and shutdown. `TEST_REPORT.md` records the checks actually run on the delivered version. The optional development browser check uses Playwright; this dependency is not needed to run the demonstration or its Python tests.
 
+The complete release suite also checks source packaging and rebuilding the extracted guide; those three packaging checks require Node 24. The Python simulator itself has no Node dependency.
+
 ## Run the same package in Docker
 
 Docker is optional. From this directory:
@@ -89,6 +91,8 @@ The technical design supplement gives complete VM/container procedures for AWS, 
 - `AI_USAGE.md`: the original implementation and AI-use record. Repository CI and `docs/RELEASE_VERIFICATION.md` record release checks.
 
 The sources, documents and evidence are included together in the distribution ZIP. This is an instructor demonstration with an unscored observation checklist, rather than an assessed student assignment.
+
+The source ZIP also includes the static guide, build scripts, manifests, and Apache license. Its `.dockerignore` is generated from the tracked `scripts/source-dockerignore.txt` policy because Vercel omits dotfiles of this name during upload. Keep both policy files identical when updating Docker exclusions.
 
 ## Limits and troubleshooting
 

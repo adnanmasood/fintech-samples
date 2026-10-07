@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.git/
+.venv/
+docs/
+screenshots/
+qa/
+tests/
+*.zip
+*.log
