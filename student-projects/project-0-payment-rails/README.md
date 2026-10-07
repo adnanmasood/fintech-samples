@@ -2,23 +2,32 @@
 
 A complete instructor reference demonstration for Adnan Masood, PhD.'s USF AI in FinTech course. Six small Python processes show a fictional card payment traveling from payer to issuer and back, followed by capture, clearing, and settlement.
 
+**Instructor sample:** this project lives in `student-projects/project-0-payment-rails/` alongside student submissions as a reference implementation. Its exploration checklist is unscored.
+
 ## Static project guide
 
 The included [static guide](site/) explains the participant roles, payment lifecycle, and unscored exploration checklist. The [PDF guides and diagrams](docs/) are also available in this repository. Run the Python simulator locally using the commands below.
 
-To build and preview the guide locally, use Node 24 and Python 3:
+To build and preview the guide from a repository clone, use Node 24 and Python 3. From the repository root:
 
 ```sh
-cd project-0-payment-rails
+cd student-projects/project-0-payment-rails
 npm run build
 python3 -m http.server 8000 --bind 127.0.0.1 --directory site-dist
 ```
 
-Open **http://127.0.0.1:8000** for the guide, PDFs, images, and complete simulator source download. For a future Vercel release, use root directory `project-0-payment-rails`, framework Other, build command `npm run build`, and output directory `site-dist`. The hosted guide is static; the simulator runs locally.
+Open **http://127.0.0.1:8000** for the guide, PDFs, images, and complete simulator source download. The hosted guide is static; the simulator runs locally. The current hosted release predates this repository move. Hosting configuration and deployment export tooling were left unchanged; the [release record](https://github.com/adnanmasood/fintech-samples/blob/main/docs/RELEASE_VERIFICATION.md) identifies the published commit.
 
 ## Open the demonstration
 
-Python **3.9 or later** and a recent browser are the only runtime requirements. Extract the entire package before launching; keep its folders together.
+Python **3.9 or later** and a recent browser are the only runtime requirements. From the root of a repository clone:
+
+```sh
+cd student-projects/project-0-payment-rails
+python3 start.py
+```
+
+For a downloaded source ZIP, extract the entire package and keep its folders together. The extracted folder remains named `project-0-payment-rails`; from its parent directory:
 
 ```sh
 cd project-0-payment-rails
@@ -88,7 +97,7 @@ The technical design supplement gives complete VM/container procedures for AWS, 
 - `docs/diagrams/`: editable diagram sources and SVG exports.
 - `screenshots/`: captures of the implemented dashboard at authorization, decline and settlement.
 - `data/`: fictional scenarios; `tests/`: runnable verification.
-- `AI_USAGE.md`: the original implementation and AI-use record. Repository CI and `docs/RELEASE_VERIFICATION.md` record release checks.
+- `AI_USAGE.md`: the original implementation and AI-use record. Repository CI and the [release record](https://github.com/adnanmasood/fintech-samples/blob/main/docs/RELEASE_VERIFICATION.md) document release checks.
 
 The sources, documents and evidence are included together in the distribution ZIP. This is an instructor demonstration with an unscored observation checklist, rather than an assessed student assignment.
 

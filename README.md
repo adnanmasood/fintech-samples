@@ -17,7 +17,7 @@ This is an independent teaching repository, not an official University of South 
 | Project | What you can learn | Live website | Code & instructions |
 |---|---|---|---|
 | **Fintech Algorithms** | Twelve AI algorithms, evaluation measures, guided exercises, interactive visuals, browser Python, and editable notebooks | [Open the learning app](https://usf-fintech-algorithms.vercel.app) | [Source & quick start](fintech-algorithms/) |
-| **Project 0: Payment Rails Live** | Six payment participants and the path from authorization to merchant settlement | [Open the project guide](https://usf-payment-rails.vercel.app) | [Python reference & guide](project-0-payment-rails/) |
+| **Project 0: Payment Rails Live** | Six payment participants and the path from authorization to merchant settlement | [Open the project guide](https://usf-payment-rails.vercel.app) | [Python reference & guide](student-projects/project-0-payment-rails/) |
 
 **Fintech Algorithms** is a static Astro/Svelte application. It covers logistic regression, trees and forests, gradient boosting, time series, clustering, anomaly detection, graph methods, transformers, retrieval-augmented generation, optimization, reinforcement learning, and Monte Carlo simulation. Its teaching activities combine numerical work, model selection, financial consequences, and limitations.
 
@@ -43,15 +43,17 @@ Project 0 is the instructor reference implementation. Projects 1–8 summarize t
 
 | Project | Title | Brief abstract |
 |---|---|---|
-| 0 | **Payment Rails Live** | Trace a fictional card payment through six participants and authorization, capture, clearing, and settlement. A local Python simulator makes messages, balances, retries, and illustrative fees visible. |
-| 1 | **Loan Application System** | Validate application evidence and income consistency before applying a mock lending policy. Present an approval or review outcome with clear reasons, including missing documents and unavailable scores. |
+| 0 | [**Payment Rails Live**](student-projects/project-0-payment-rails/) | Trace a fictional card payment through six participants and authorization, capture, clearing, and settlement. A local Python simulator makes messages, balances, retries, and illustrative fees visible. |
+| 1 | [**Loan Application System**](student-projects/ahmad-abuadas/) | Validate application evidence and income consistency before applying a mock lending policy. Present an approval or review outcome with clear reasons, including missing documents and unavailable scores. |
 | 2 | **Digital Wallet Transfer System** | Transfer fictional funds between wallets while preserving total balances. Validate requests, prevent duplicate transfers, detect conflicting retries, and display a transaction receipt. |
-| 3 | **Card Payment Fraud Screening System** | Apply an ordered policy to fictional card transactions using blocked-card checks and mock risk scores. Explain approval, challenge, or decline decisions and handle unavailable models. |
+| 3 | [**Card Payment Fraud Screening System**](student-projects/huei-en-cho/) | Apply an ordered policy to fictional card transactions using blocked-card checks and mock risk scores. Explain approval, challenge, or decline decisions and handle unavailable models. |
 | 4 | **Bank Account Onboarding System** | Compare fictional signup information with mock identity-document records. Detect missing fields and name or birth-date mismatches, then identify records ready for external verification. |
 | 5 | **Supplier Invoice Approval System** | Validate fictional invoice metadata and prevent duplicate intake using supplier and invoice identifiers. Create unique records pending approval while preserving the original invoice on resubmission. |
 | 6 | **Personal Budget Assistant** | Categorize fictional purchases from a CSV using transparent merchant rules and exact monetary arithmetic. Report category totals and reject invalid rows with useful explanations. |
 | 7 | **Insurance Claim Intake System** | Check fictional claims for required facts and evidence labels. List missing information and identify complete cases ready for adjuster review. |
 | 8 | **Investment Research Assistant** | Search a controlled collection of fictional reports and return matching evidence with file-and-line citations. Distinguish absent matches from unavailable searches. |
+
+Browse the [student-projects index](student-projects/README.md) for the instructor sample and the student submissions. The linked student implementations may extend or adapt their course briefs.
 
 ## Run locally
 
@@ -80,11 +82,11 @@ Open **http://localhost:8000**. Python 3.9 or newer runs the built app; Windows 
 Use **Python 3.9 or newer**; the simulator has no external Python runtime dependencies.
 
 ```sh
-cd project-0-payment-rails
+cd student-projects/project-0-payment-rails
 python3 start.py
 ```
 
-On Windows, use `py -3 start.py`. Open **http://127.0.0.1:8010** and keep the terminal running. Ctrl+C stops the simulator and its six participants. See the [project README](project-0-payment-rails/README.md) for Docker, guided demonstrations, tests, and limitations.
+On Windows, use `py -3 start.py`. Open **http://127.0.0.1:8010** and keep the terminal running. Ctrl+C stops the simulator and its six participants. See the [project README](student-projects/project-0-payment-rails/README.md) for Docker, guided demonstrations, tests, and limitations.
 
 ## Submit your individual project
 
@@ -134,8 +136,8 @@ Claude Code can help create a PR through GitHub CLI. Review the code and generat
 | Location | Purpose |
 |---|---|
 | `fintech-algorithms/` | Learning website, teaching data, scientific browser runtime, notebooks, and tests |
-| `project-0-payment-rails/` | Local Python simulator, fictional scenarios, guides, diagrams, and static project website |
-| `student-projects/` | Individual project contributions submitted through reviewed PRs |
+| `student-projects/` | Student submissions and the Project 0 instructor sample; see the [project index](student-projects/README.md) |
+| `student-projects/project-0-payment-rails/` | Instructor sample: local Python simulator, fictional scenarios, guides, diagrams, and static guide source |
 | `docs/` | Submission template, banner, and release verification |
 | `scripts/` | Publication hygiene checks |
 | `.github/` | CI and pull request template |
@@ -146,7 +148,7 @@ Repository CI validates teaching content, types, unit and browser behavior, offl
 
 Both instructor reference websites are published on Vercel. Browser Python and notebooks run on the learner's device; the Payment Rails simulator runs locally. The hosted guide does not run a payment backend or collect student accounts or grades.
 
-Vercel releases use the [instructor-only export](scripts/export-vercel-source.py) from a verified Git commit. The export admits only the two reference application directories and required licensing/configuration, so student submissions anywhere else in the repository are excluded. The latest deployed application commit and verification results are recorded in [release verification](docs/RELEASE_VERIFICATION.md).
+The live sites serve the published application commit recorded in [release verification](docs/RELEASE_VERIFICATION.md). The repository has since moved Payment Rails into `student-projects/` as an instructor sample. This reorganization changes repository links and check paths; Vercel settings, deployment configuration, export tooling, and published artifacts remain unchanged. Future deployment work must account for the new layout.
 
 ## Rights and attribution
 
