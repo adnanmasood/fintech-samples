@@ -1,0 +1,4 @@
+transaction_id,date,description,amount,type
+T1,2026-09-02,CITY MARKET,40.00,purchase
+T2,2026-09-09,CITY MARKET,60.00,purchase
+T3,2026-09-12,RAILCO,30.00,purchase

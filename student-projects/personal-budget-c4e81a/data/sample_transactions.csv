@@ -1,0 +1,21 @@
+transaction_id,date,description,amount,type,account
+S001,2026-09-01,PAYROLL - FICTIONAL EMPLOYER,3000.00,income,checking
+S002,2026-09-01,RENT - MAPLE APARTMENTS,1200.00,purchase,checking
+S003,2026-09-03,CITY MARKET #12,86.40,purchase,debit
+S004,2026-09-05,CORNER CAFE,14.25,purchase,credit-card
+S005,2026-09-07,RAILCO TICKET,30.00,purchase,credit-card
+S006,2026-09-08,FRESHWAY FOODS,72.15,purchase,debit
+S007,2026-09-09,STREAMFLIX MONTHLY,15.99,purchase,credit-card
+S008,2026-09-10,CITY MARKET #12,20.00,refund,debit
+S009,2026-09-11,BAYSIDE BISTRO,48.60,purchase,credit-card
+S010,2026-09-12,TRANSFER TO SAVINGS,500.00,transfer,checking
+S011,2026-09-14,SUNCOAST POWER,92.30,purchase,checking
+S012,2026-09-15,LUNA BOOKSHOP,27.50,purchase,credit-card
+S013,2026-09-16,QUICKFUEL STATION 4,41.10,purchase,debit
+S014,2026-09-18,GREENLEAF GROCERY,twenty,purchase,debit
+S015,2026-09-19,CITY MARKET #12,64.80,purchase,debit
+S016,2026-09-20,PIZZA PALACE,22.40,purchase,credit-card
+S017,2026-09-31,METRO TRANSIT PASS,45.00,purchase,debit
+S005,2026-09-21,RAILCO TICKET,30.00,purchase,credit-card
+S018,2026-09-25,CARD PAYMENT - THANK YOU,128.73,card_payment,checking
+S019,2026-09-27,CINEPLEX,-18.00,purchase,credit-card

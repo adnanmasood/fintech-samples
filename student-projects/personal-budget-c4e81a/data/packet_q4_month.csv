@@ -1,0 +1,8 @@
+transaction_id,date,description,amount,type,account
+Q1,2026-09-01,SALARY,3000.00,income,checking
+Q2,2026-09-02,RENT PAYMENT,1200.00,purchase,checking
+Q3,2026-09-03,CITY MARKET,200.00,purchase,debit
+Q4,2026-09-04,BAYSIDE BISTRO,80.00,purchase,credit-card
+Q5,2026-09-05,CITY MARKET,20.00,refund,debit
+Q6,2026-09-06,TRANSFER TO SAVINGS,500.00,transfer,checking
+Q7,2026-09-07,CARD PAYMENT,80.00,card_payment,checking
