@@ -1,0 +1,4 @@
+transaction_id,date,description,amount,type
+R1,2026-09-02,CITY MARKET,20.00,purchase
+R2,2026-09-03,CORNER CAFE,30.00,purchase
+R3,2026-09-04,FRESHWAY FOODS,twenty,purchase
