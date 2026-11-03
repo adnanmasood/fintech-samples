@@ -1,0 +1,4 @@
+Q3 Revenue Report (fictional)
+Acme Widgets grew revenue 12% year over year.
+Subscription sales drove most of the growth.
+Hardware margins were flat at 31%.
