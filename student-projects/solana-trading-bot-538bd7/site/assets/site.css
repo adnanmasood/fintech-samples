@@ -1,0 +1,492 @@
+/* ---------------------------------------------------------------------------
+   USF landing page.
+   Palette sampled from the hero footage so the page and the video read as one
+   world: deep indigo slate, cold cyan light, a rose accent in rare doses.
+   --------------------------------------------------------------------------- */
+:root{
+  --canvas:#0a0d18;
+  --panel:#111629;
+  --panel-2:#161d33;
+  --line:#222b45;
+  --line-bright:#33406a;
+  --text:#e8ecf7;
+  --text-dim:#9aa5c4;
+  --text-faint:#6b7699;
+  --accent:#ff5c7a;
+  --accent-hover:#ff7590;
+  --accent-muted:rgba(255,92,122,.22);
+  --cyan:#4fd8e8;
+  --cyan-dim:#2a7d89;
+  --violet:#8b7cf6;
+  --display:'Sora',system-ui,-apple-system,sans-serif;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-soft:cubic-bezier(.4,0,.2,1);
+  --tshadow:0 1px 2px rgba(5,5,10,.95),0 3px 12px rgba(5,5,10,.78),0 10px 44px rgba(5,5,10,.8);
+  --maxw:1180px;
+}
+
+*{box-sizing:border-box}
+html,body{overflow-x:hidden;overflow-x:clip}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--canvas);color:var(--text);
+  font-family:var(--sans);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--accent);color:#14060b;padding:10px 16px;border-radius:0 0 8px 0;font-weight:600;
+}
+.skip:focus{left:0}
+
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* --- the fixed environment ------------------------------------------------ */
+.env{position:fixed;inset:0;z-index:0;pointer-events:none}
+.env span{position:absolute;inset:0;display:block}
+.env-a{
+  background:radial-gradient(ellipse 60% 45% at 20% 15%,rgba(79,216,232,.10),transparent 70%);
+  animation:drift-a 78s var(--ease-soft) -12s infinite alternate;
+}
+.env-b{
+  background:radial-gradient(ellipse 55% 40% at 82% 88%,rgba(139,124,246,.09),transparent 70%);
+  animation:drift-b 96s var(--ease-soft) -30s infinite alternate;
+}
+.env-grain{
+  opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@keyframes drift-a{to{transform:translate3d(4%,3%,0) scale(1.12)}}
+@keyframes drift-b{to{transform:translate3d(-5%,-3%,0) scale(1.15)}}
+
+/* --- nav ------------------------------------------------------------------ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;align-items:center;gap:24px;
+  padding:14px clamp(16px,4vw,40px);
+  background:linear-gradient(to bottom,rgba(10,13,24,.88),rgba(10,13,24,0));
+  backdrop-filter:blur(6px);
+}
+.nav-brand{
+  display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.03em;
+  color:var(--text);text-decoration:none;
+}
+.mark{width:22px;height:22px;flex:0 0 22px}
+.mark-core{fill:var(--accent)}
+.mark-spokes line{stroke:var(--cyan-dim);stroke-width:1.1}
+.mark-nodes circle{fill:var(--cyan)}
+.nav-links{display:flex;gap:22px;margin-left:auto}
+.nav-links a{
+  color:var(--text-dim);text-decoration:none;font-size:14px;
+  transition:color .25s var(--ease);
+}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{margin-left:8px}
+@media(max-width:820px){.nav-links{display:none}.nav-cta{margin-left:auto}}
+
+/* --- buttons -------------------------------------------------------------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--sans);font-size:14px;font-weight:500;
+  padding:11px 20px;border-radius:10px;text-decoration:none;border:1px solid var(--line-bright);
+  background:var(--panel-2);color:var(--text);cursor:pointer;
+  transition:background .28s var(--ease),border-color .28s var(--ease),transform .28s var(--ease),box-shadow .28s var(--ease);
+  text-shadow:none;
+}
+.btn:hover{background:#1b2340;border-color:var(--cyan-dim);transform:translateY(-1px)}
+.btn:active{transform:translateY(0)}
+.btn-primary{
+  background:var(--accent);border-color:var(--accent);color:#180509;font-weight:600;
+  box-shadow:0 6px 26px rgba(255,92,122,.22);
+}
+.btn-primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);box-shadow:0 10px 34px rgba(255,92,122,.32)}
+.btn-ghost{background:transparent}
+.btn-lg{padding:14px 26px;font-size:15px}
+@media(pointer:coarse){.btn{min-height:44px}}
+
+/* --- hero ----------------------------------------------------------------- */
+.hero{position:relative;height:460vh}
+.stage{
+  position:sticky;top:0;height:100vh;overflow:hidden;
+  background:var(--canvas);
+}
+.poster{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  transition:opacity .8s var(--ease);
+}
+#hero{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .7s var(--ease);
+  will-change:transform;transform:translateZ(0);
+}
+.stage.video-ready #hero{opacity:1}
+.stage.video-ready .poster{opacity:0}
+.stage.video-failed #hero{display:none}
+
+/* The always-on base scrim, so no frame is ever raw behind the page. */
+.scrim{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 120% 90% at 50% 45%,rgba(10,10,18,0) 35%,rgba(10,10,18,.62) 100%);
+}
+
+.ring{
+  position:absolute;left:50%;bottom:52px;transform:translateX(-50%) rotate(-90deg);
+  width:44px;height:44px;color:var(--cyan);opacity:.85;
+  transition:opacity .5s var(--ease);
+}
+.stage.video-ready .ring{opacity:0}
+
+.bands{position:absolute;inset:0;pointer-events:none}
+.band{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 clamp(20px,7vw,90px);
+  opacity:0;text-shadow:var(--tshadow);
+}
+.band > *{pointer-events:auto}
+/* The action lane is the centre of the frame, so the words flank it.
+   The cap is in px, not ch: a ch on the container resolves against the body
+   font, not the display face inside it, which squeezes the headline. */
+.band:not(.settle){max-width:min(660px,47%)}
+.band:nth-of-type(even):not(.settle){margin-left:auto;text-align:right}
+.band.settle{align-items:center;text-align:center;max-width:none}
+
+/* Per-band scrim: dims the footage only while its own text is on. */
+.band::before{
+  content:"";position:absolute;inset:-4%;pointer-events:none;
+  opacity:calc(.25 + .75*var(--k,1));
+  background:radial-gradient(ellipse 74% 62% at 30% 50%,rgba(5,5,10,.66) 0%,rgba(5,5,10,.44) 46%,rgba(5,5,10,0) 76%);
+}
+.band:nth-of-type(even):not(.settle)::before{
+  background:radial-gradient(ellipse 74% 62% at 70% 50%,rgba(5,5,10,.66) 0%,rgba(5,5,10,.44) 46%,rgba(5,5,10,0) 76%);
+}
+.band.settle::before{
+  background:radial-gradient(ellipse 86% 70% at 50% 46%,rgba(5,5,10,.72) 0%,rgba(5,5,10,.5) 48%,rgba(5,5,10,0) 78%);
+}
+
+.kicker{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--cyan);margin:0 0 14px;
+}
+.band h1,.band h2{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(30px,4.4vw,56px);line-height:1.08;letter-spacing:-.02em;
+  margin:0 0 16px;max-width:18ch;
+}
+.band.settle h2{max-width:24ch;margin-left:auto;margin-right:auto}
+.band .sub{
+  font-size:clamp(15px,1.5vw,18px);color:#cdd5ea;margin:0;
+  max-width:38ch;
+}
+.band:nth-of-type(even):not(.settle) .sub{margin-left:auto}
+.band.settle .sub{margin:0 auto}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.band.settle .cta-row{justify-content:center}
+
+/* Small text over footage gets a chip, never the big radial. */
+.chip{
+  background:rgba(8,8,15,.55);border:1px solid rgba(96,96,126,.3);border-radius:10px;
+  backdrop-filter:blur(10px);text-shadow:0 1px 3px rgba(5,5,10,.85);
+}
+.hud{
+  position:absolute;left:clamp(20px,7vw,90px);bottom:34px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  color:var(--text-dim);padding:7px 12px;
+}
+.hud b{color:var(--cyan);font-weight:500}
+
+.cue{
+  position:absolute;left:50%;bottom:26px;transform:translateX(-50%);
+  width:22px;height:34px;border:1px solid rgba(154,165,196,.4);border-radius:11px;
+}
+.cue span{
+  position:absolute;left:50%;top:7px;width:3px;height:6px;border-radius:2px;
+  background:var(--cyan);transform:translateX(-50%);
+  animation:cue 2.4s var(--ease-soft) -.4s infinite;
+}
+@keyframes cue{0%,100%{opacity:0;transform:translate(-50%,0)}30%{opacity:1}70%{opacity:0;transform:translate(-50%,12px)}}
+.stage.scrolled .cue{opacity:0;transition:opacity .4s var(--ease)}
+
+/* Split text: word and character spans, all transform and opacity only. */
+.split .w{display:inline-block;white-space:nowrap}
+.split .c{display:inline-block;will-change:transform,opacity}
+
+[data-effect="scatter"] .c{
+  --kc:clamp(0,(var(--k,0) - var(--th,0))*2.6,1);opacity:var(--kc);
+  transform:translate(calc((1 - var(--kc))*var(--jx,0px)),calc((1 - var(--kc))*var(--jy,0px)))
+            rotate(calc((1 - var(--kc))*var(--jr,0deg)));
+}
+[data-effect="drift"] .w{
+  --kc:clamp(0,(var(--k,0) - var(--th,0))*2.8,1);opacity:var(--kc);
+  transform:translateY(calc((1 - var(--kc))*-26px));
+}
+[data-effect="punch"] .w{
+  --kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);
+  --ks:clamp(0,(var(--k,0) - var(--th,0) - var(--sd,.1))*var(--ss,3.2),1);
+  opacity:var(--kc);
+  transform:scale(calc(0.62 + (0.38 + var(--ov,.12))*var(--kc) - var(--ov,.12)*var(--ks)));
+}
+[data-effect="punch"] .w.em{--ov:.24;--sd:.16;--ss:2.6}
+[data-effect="rise"] .w{
+  --kc:clamp(0,(var(--k,0) - var(--th,0))*2.6,1);opacity:var(--kc);
+  transform:translateY(calc((1 - var(--kc))*22px));
+}
+.band.settle .sub{opacity:var(--ks-sub,1)}
+.band.settle .cta-row{opacity:var(--kb,1)}
+
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* --- the static hero ------------------------------------------------------ */
+.static-hero{display:none;position:relative;min-height:88vh;align-items:center;overflow:hidden}
+.static-hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:var(--static-bg,none);background-size:cover;background-position:center;
+}
+.static-hero::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(10,13,24,.55),rgba(10,13,24,.86));
+}
+.static-inner{position:relative;z-index:1;padding:120px clamp(20px,7vw,60px) 70px;max-width:44ch}
+.static-inner h1{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(32px,8vw,48px);line-height:1.08;letter-spacing:-.02em;margin:0 0 16px;
+}
+.static-inner .sub{color:#cdd5ea;margin:0;font-size:16px}
+
+/* --- sections ------------------------------------------------------------- */
+.sec{position:relative;z-index:1;padding:clamp(64px,9vw,120px) clamp(20px,5vw,40px);max-width:var(--maxw);margin:0 auto}
+.sec-head{max-width:62ch;margin-bottom:44px}
+.sec-head h2{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(24px,3.2vw,38px);line-height:1.16;letter-spacing:-.015em;margin:0 0 14px;
+}
+.lede{color:var(--text-dim);font-size:clamp(15px,1.5vw,17px);margin:0;max-width:60ch}
+.note{color:var(--text-faint);font-size:13.5px;margin:18px 0 0}
+
+/* No two neighbouring sections share a skeleton: this one is a framed band. */
+.sec-band{
+  border:1px solid var(--line);border-radius:20px;
+  background:linear-gradient(160deg,rgba(17,22,41,.9),rgba(10,13,24,.5));
+  padding:clamp(28px,4vw,48px);
+}
+
+.cards{display:grid;gap:16px}
+.cards.k3{grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;
+  position:relative;overflow:hidden;
+  transition:border-color .35s var(--ease),transform .35s var(--ease);
+}
+.card:hover{border-color:var(--line-bright);transform:translateY(-2px)}
+.card h3{font-family:var(--display);font-size:16px;font-weight:600;margin:0 0 10px}
+.card p{margin:0;color:var(--text-dim);font-size:14.5px}
+
+/* --- the self-drawing pipeline (the signature element) -------------------- */
+.pipeline{margin:0 0 44px;overflow-x:auto}
+.pipe-svg{width:100%;min-width:640px;height:auto;display:block}
+.pipe-track{fill:none;stroke:var(--line);stroke-width:2}
+.pipe-draw{
+  fill:none;stroke:url(#flow);stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:860;stroke-dashoffset:var(--pipe,860);
+}
+.pipe-node circle{fill:var(--canvas);stroke:var(--line-bright);stroke-width:2;transition:stroke .5s var(--ease),fill .5s var(--ease)}
+.pipe-node.on circle{stroke:var(--cyan);fill:#0f2530}
+.pipe-node[data-i="4"].on circle{stroke:var(--accent);fill:#2a0f18}
+.pipe-node text{
+  fill:var(--text-dim);font-family:var(--display);font-size:15px;font-weight:600;text-anchor:middle;
+  transition:fill .5s var(--ease);
+}
+.pipe-node.on text{fill:var(--text)}
+.pipe-node .pipe-sub{fill:var(--text-faint);font-family:var(--mono);font-size:11px;font-weight:400}
+
+/* --- buckets -------------------------------------------------------------- */
+.bucket-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.bucket{background:rgba(10,13,24,.5);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.bucket-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.bucket-top b{font-family:var(--display);font-size:15px}
+.mono{font-family:var(--mono);font-size:12.5px;color:var(--cyan)}
+.bucket-bar{height:5px;border-radius:3px;background:var(--panel-2);overflow:hidden;margin-bottom:12px}
+.bucket-bar i{
+  display:block;height:100%;width:0;border-radius:3px;
+  background:linear-gradient(90deg,var(--cyan-dim),var(--cyan));
+  transition:width 1.1s var(--ease);
+}
+.bucket.in .bucket-bar i{width:calc(var(--pct)*1%)}
+.bucket p{margin:0;color:var(--text-dim);font-size:14px}
+
+/* --- agents --------------------------------------------------------------- */
+.agent-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.agent{
+  border:1px solid var(--line);border-radius:14px;padding:22px 24px;
+  background:linear-gradient(165deg,rgba(22,29,51,.7),rgba(10,13,24,.4));
+  position:relative;transition:border-color .35s var(--ease),transform .35s var(--ease);
+}
+.agent:hover{border-color:var(--line-bright);transform:translateY(-2px)}
+.agent.accent{border-color:rgba(255,92,122,.24)}
+.agent.accent:hover{border-color:var(--accent-muted)}
+.agent-n{display:block;color:var(--text-faint);font-size:11.5px;letter-spacing:.14em;margin-bottom:10px}
+.agent.accent .agent-n{color:var(--accent)}
+.agent h3{font-family:var(--display);font-size:17px;font-weight:600;margin:0 0 10px}
+.agent p{margin:0;color:var(--text-dim);font-size:14.5px}
+
+/* --- the interactive gate ------------------------------------------------- */
+.gate{margin-top:36px;text-align:center}
+.gate-stages{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px;text-align:left;
+}
+.gate-stage{
+  border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+  opacity:.35;transition:opacity .4s var(--ease),border-color .4s var(--ease),background .4s var(--ease);
+}
+.gate-stage.on{opacity:1;border-color:var(--cyan-dim);background:rgba(79,216,232,.06)}
+.gate-stage:last-child.on{border-color:var(--accent-muted);background:rgba(255,92,122,.07)}
+.gate-stage b{display:block;font-family:var(--display);font-size:14px;margin-bottom:3px}
+.gate-stage span{font-family:var(--mono);font-size:11px;color:var(--text-faint)}
+.gate-track{height:6px;border-radius:3px;background:var(--panel-2);overflow:hidden;margin-bottom:22px}
+.gate-track i{
+  display:block;height:100%;width:0;border-radius:3px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet),var(--accent));
+}
+.gate-btn{user-select:none;-webkit-user-select:none;touch-action:none}
+@media(max-width:760px){.gate-stages{grid-template-columns:repeat(2,1fr)}}
+
+/* --- closing CTA ---------------------------------------------------------- */
+.cta-sec{padding-top:0}
+.cta-card{
+  border:1px solid var(--line-bright);border-radius:22px;text-align:center;
+  padding:clamp(36px,6vw,68px) clamp(24px,5vw,56px);
+  background:
+    radial-gradient(ellipse 70% 120% at 50% 0%,rgba(255,92,122,.1),transparent 70%),
+    linear-gradient(160deg,rgba(22,29,51,.85),rgba(10,13,24,.6));
+}
+.cta-card h2{font-family:var(--display);font-weight:600;font-size:clamp(24px,3.4vw,38px);line-height:1.14;margin:0 0 14px;letter-spacing:-.015em}
+.cta-card .lede{margin:0 auto}
+.cta-card .cta-row{justify-content:center;margin-top:28px}
+
+/* --- footer --------------------------------------------------------------- */
+.foot{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:40px;padding:40px clamp(20px,5vw,40px) 30px}
+.foot-inner{max-width:var(--maxw);margin:0 auto;display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.foot-links a{color:var(--text-dim);text-decoration:none;font-size:14px;transition:color .25s var(--ease)}
+.foot-links a:hover{color:var(--text)}
+.disclaimer{
+  max-width:var(--maxw);margin:28px auto 0;padding-top:20px;border-top:1px solid var(--line);
+  color:var(--text-faint);font-size:12.5px;line-height:1.7;
+}
+
+/* --- entrances ------------------------------------------------------------ */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.cards .reveal:nth-child(2),.agent-grid .reveal:nth-child(2),.bucket-grid .reveal:nth-child(2){transition-delay:.08s}
+.cards .reveal:nth-child(3),.agent-grid .reveal:nth-child(3),.bucket-grid .reveal:nth-child(3){transition-delay:.16s}
+.cards .reveal:nth-child(4),.agent-grid .reveal:nth-child(4),.bucket-grid .reveal:nth-child(4){transition-delay:.24s}
+.agent-grid .reveal:nth-child(5){transition-delay:.32s}
+.agent-grid .reveal:nth-child(6){transition-delay:.4s}
+/* Retire the stagger once the entrance is done, or every later hover lags.
+   This selector has to match the nth-child rules above to win the cascade. */
+.cards .reveal.in.done:nth-child(n),.agent-grid .reveal.in.done:nth-child(n),
+.bucket-grid .reveal.in.done:nth-child(n){transition-delay:0s}
+
+/* --- the five static-hero gates ------------------------------------------- */
+@media (max-width:720px){
+  .hero{display:none}
+  .static-hero{display:flex}
+}
+@media (orientation:portrait) and (max-width:1024px){
+  .hero{display:none}
+  .static-hero{display:flex}
+}
+@media (orientation:portrait) and (pointer:coarse){
+  .hero{display:none}
+  .static-hero{display:flex}
+}
+@media (orientation:landscape) and (pointer:coarse) and (max-height:560px){
+  .hero{display:none}
+  .static-hero{display:flex}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero{display:none}
+  .static-hero{display:flex}
+}
+
+/* A scrub-capable screen that is merely short has no room for the overlays. */
+@media (max-height:560px){.hud,.cue{display:none}}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;transition-delay:0s !important;
+  }
+  .reveal{opacity:1;transform:none}
+  .bucket .bucket-bar i{width:calc(var(--pct)*1%)}
+  .pipe-draw{stroke-dashoffset:0}
+  .pipe-node{opacity:1}
+  .pipe-node circle{stroke:var(--cyan)}
+  .gate-stage{opacity:1}
+}
+
+/* Pausing looping animation on a hidden tab. animation-play-state does not
+   inherit, so it has to reach the pseudo-elements explicitly. */
+body.paused *, body.paused *::before, body.paused *::after {
+  animation-play-state: paused !important;
+}
+
+/* The security gate sits below the agent grid: it is not one of the five, and
+   the layout should not pretend otherwise. */
+.gate-block{
+  margin-top:16px;border:1px solid rgba(255,92,122,.28);border-radius:14px;
+  padding:24px 26px;
+  background:
+    radial-gradient(ellipse 60% 130% at 0% 50%,rgba(255,92,122,.09),transparent 68%),
+    linear-gradient(165deg,rgba(22,29,51,.7),rgba(10,13,24,.4));
+}
+.gate-block .kicker{color:var(--accent);margin-bottom:10px}
+.gate-block h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0 0 10px}
+.gate-block p{margin:0 0 10px;color:var(--text-dim);font-size:14.5px;max-width:74ch}
+.gate-block .note{margin:0;font-size:13.5px}
+
+/* --- stills from the hero's own footage ----------------------------------- */
+.shot{
+  margin:0 0 40px;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+  background:var(--panel);
+}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{
+  padding:12px 18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;
+  color:var(--text-faint);border-top:1px solid var(--line);
+}
+.shot.inset{margin:26px 0 0}
+
+.gate-block{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:26px;align-items:center}
+.gate-shot{
+  display:block;width:100%;height:100%;max-height:220px;object-fit:cover;
+  border-radius:11px;border:1px solid var(--line);
+}
+@media(max-width:760px){
+  .gate-block{grid-template-columns:1fr}
+  .gate-shot{max-height:180px}
+}
+
+/* The closing card rests on the ending frame, the shot the hero arrives at. */
+.cta-card{position:relative;overflow:hidden;isolation:isolate}
+.cta-bg{
+  position:absolute;inset:0;z-index:-1;
+  background-image:url('hero-ending.jpg');
+  background-size:cover;background-position:center;
+  opacity:.3;
+}
+.cta-card::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(to bottom,rgba(10,13,24,.62),rgba(10,13,24,.9));
+}
+
+.build{
+  max-width:var(--maxw);margin:20px auto 0;
+  font-family:var(--mono);font-size:11.5px;color:var(--text-faint);letter-spacing:.04em;
+}

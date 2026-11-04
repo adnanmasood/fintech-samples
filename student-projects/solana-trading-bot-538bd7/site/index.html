@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>USF - five agents, one decision</title>
+<meta name="description" content="A multi-agent Solana trading platform. Five independent agents find, score and screen every token, and a security gate can stop any of them." />
+<meta name="theme-color" content="#0a0d18" />
+<meta name="color-scheme" content="dark" />
+<!-- DEPLOY STEP: og:url and og:image need absolute URLs, which only exist once this is hosted. -->
+<meta property="og:title" content="USF - five agents, one decision" />
+<meta property="og:description" content="A multi-agent Solana trading platform. A security gate can stop any agent." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%230a0d18'/%3E%3Ccircle cx='12' cy='12' r='2.6' fill='%23ff5c7a'/%3E%3Cg stroke='%234fd8e8' stroke-width='1.1'%3E%3Cline x1='12' y1='12' x2='20' y2='12'/%3E%3Cline x1='12' y1='12' x2='16' y2='19'/%3E%3Cline x1='12' y1='12' x2='8' y2='19'/%3E%3Cline x1='12' y1='12' x2='4' y2='12'/%3E%3Cline x1='12' y1='12' x2='8' y2='5'/%3E%3Cline x1='12' y1='12' x2='16' y2='5'/%3E%3C/g%3E%3Cg fill='%234fd8e8'%3E%3Ccircle cx='20' cy='12' r='1.7'/%3E%3Ccircle cx='16' cy='19' r='1.7'/%3E%3Ccircle cx='8' cy='19' r='1.7'/%3E%3Ccircle cx='4' cy='12' r='1.7'/%3E%3Ccircle cx='8' cy='5' r='1.7'/%3E%3Ccircle cx='16' cy='5' r='1.7'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- One fixed environment layer behind everything, so scrolling feels like
+     moving through a place rather than past stacked sections. -->
+<div class="env" aria-hidden="true"><span class="env-a"></span><span class="env-b"></span><span class="env-grain"></span></div>
+
+<nav class="nav" aria-label="Main">
+  <a class="nav-brand" href="#top">
+    <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+      <circle class="mark-core" cx="12" cy="12" r="2.6"/>
+      <g class="mark-spokes"><line x1="12" y1="12" x2="20" y2="12"/><line x1="12" y1="12" x2="16" y2="19"/><line x1="12" y1="12" x2="8" y2="19"/><line x1="12" y1="12" x2="4" y2="12"/><line x1="12" y1="12" x2="8" y2="5"/><line x1="12" y1="12" x2="16" y2="5"/></g>
+      <g class="mark-nodes"><circle cx="20" cy="12" r="1.7"/><circle cx="16" cy="19" r="1.7"/><circle cx="8" cy="19" r="1.7"/><circle cx="4" cy="12" r="1.7"/><circle cx="8" cy="5" r="1.7"/><circle cx="16" cy="5" r="1.7"/></g>
+    </svg>
+    <span>USF</span>
+  </a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#buckets">Buckets</a>
+    <a href="#agents">Agents</a>
+    <a href="#safety">Safety</a>
+  </div>
+  <a class="btn btn-primary nav-cta" href="/app/">Open the console</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="stage" id="stage">
+    <div class="poster" id="poster" aria-hidden="true"></div>
+    <video id="hero" preload="none" muted playsinline aria-hidden="true" tabindex="-1"></video>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <svg class="ring" id="ring" viewBox="0 0 48 48" aria-hidden="true">
+      <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3"
+              stroke-dasharray="126" style="stroke-dashoffset:var(--ld,126)"/>
+    </svg>
+
+    <div class="bands" id="bands">
+      <section class="band" data-band="0,0.17" data-ramp="0.04">
+        <p class="kicker">Solana, automated</p>
+        <h1 class="line split" data-effect="scatter" data-spread="0.5">Five agents. One decision.</h1>
+        <p class="sub">Every token is judged five ways before a single dollar moves.</p>
+      </section>
+
+      <section class="band" data-band="0.21,0.44">
+        <h2 class="line split" data-effect="drift">They work the whole way down.</h2>
+        <p class="sub">One finds the wallets worth following. One hunts what nobody has priced yet. One watches the last five minutes. One reads the room.</p>
+      </section>
+
+      <section class="band" data-band="0.48,0.70">
+        <h2 class="line split" data-effect="punch">Any one of them can say no.</h2>
+        <p class="sub">A perfect score does not survive a failed security check. The risk manager overrules all of them.</p>
+      </section>
+
+      <section class="band settle" data-band="0.75,1">
+        <p class="kicker">Paper first, always</p>
+        <h2 class="line split" data-effect="rise">Watch them work before you fund them.</h2>
+        <p class="sub">The whole pipeline runs on simulated money until you deliberately switch it over.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="/app/">Open the console</a>
+          <a class="btn btn-ghost" href="#how">See how it decides</a>
+        </div>
+      </section>
+    </div>
+
+    <div class="hud chip" id="hud" aria-hidden="true"><span id="hud-label">DESCENDING</span> <b id="hud-depth">0%</b></div>
+    <div class="cue" id="cue" aria-hidden="true"><span></span></div>
+  </div>
+</header>
+
+<!-- The static hero. Phones and reduced-motion visitors get this designed
+     layout instead of the scrub, never a blank space. -->
+<header class="static-hero" aria-labelledby="static-title">
+  <div class="static-inner">
+    <p class="kicker">Solana, automated</p>
+    <h1 id="static-title">Five agents. One decision.</h1>
+    <p class="sub">Every token is judged five ways before a single dollar moves, and a security gate can stop any of them.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/app/">Open the console</a>
+      <a class="btn btn-ghost" href="#how">See how it decides</a>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<section class="sec" id="how">
+  <div class="sec-head reveal">
+    <p class="kicker">The pipeline</p>
+    <h2>An agent has an idea. Four things happen before it becomes a trade.</h2>
+    <p class="lede">Agents produce signals. They cannot execute, cannot reach the wallet, cannot move value. Everything they suggest walks the same road, and every stage keeps a record of what it decided and why.</p>
+  </div>
+
+  <!-- The signature element: the pipeline draws itself as you scroll. -->
+  <div class="pipeline reveal" id="pipeline">
+    <svg viewBox="0 0 1000 200" class="pipe-svg" role="img" aria-label="A signal passes from an agent through security, risk and portfolio checks before reaching execution.">
+      <defs>
+        <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#4fd8e8" stop-opacity="0.15"/>
+          <stop offset="50%" stop-color="#4fd8e8" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#8b7cf6" stop-opacity="0.15"/>
+        </linearGradient>
+      </defs>
+      <path class="pipe-track" d="M70 100 H930" />
+      <path class="pipe-draw" id="pipeDraw" d="M70 100 H930" />
+      <g class="pipe-nodes">
+        <g class="pipe-node" data-i="0"><circle cx="70"  cy="100" r="9"/><text x="70"  y="138">Agent</text><text x="70" y="156" class="pipe-sub">has an idea</text></g>
+        <g class="pipe-node" data-i="1"><circle cx="285" cy="100" r="9"/><text x="285" y="138">Security</text><text x="285" y="156" class="pipe-sub">hard gate</text></g>
+        <g class="pipe-node" data-i="2"><circle cx="500" cy="100" r="9"/><text x="500" y="138">Risk</text><text x="500" y="156" class="pipe-sub">can veto or shrink</text></g>
+        <g class="pipe-node" data-i="3"><circle cx="715" cy="100" r="9"/><text x="715" y="138">Portfolio</text><text x="715" y="156" class="pipe-sub">has the cash?</text></g>
+        <g class="pipe-node" data-i="4"><circle cx="930" cy="100" r="9"/><text x="930" y="138">Execution</text><text x="930" y="156" class="pipe-sub">paper or live</text></g>
+      </g>
+    </svg>
+  </div>
+
+  <figure class="shot reveal">
+    <img src="assets/section-descent.jpg" alt="" loading="lazy" decoding="async" width="1600" height="900" />
+    <figcaption>The descent, partway down. Every station is still feeding the core.</figcaption>
+  </figure>
+
+  <div class="cards k3">
+    <article class="card reveal">
+      <h3>Security is a gate, not a score</h3>
+      <p>A live mint authority means the deployer can print supply and dilute you to nothing. A live freeze authority means you can buy and never sell. Tokens carrying either are refused outright, whatever the rest of their numbers look like.</p>
+    </article>
+    <article class="card reveal">
+      <h3>Missing data is not good news</h3>
+      <p>When the chain cannot be read, the checks did not pass, they simply did not run. The gate fails closed and refuses the trade rather than assuming the best.</p>
+    </article>
+    <article class="card reveal">
+      <h3>Every score explains itself</h3>
+      <p>Ten dimensions, weights you set per agent, and a plain sentence behind each one. Any trade in the history can be traced back to the numbers that caused it.</p>
+    </article>
+  </div>
+</section>
+
+<section class="sec" id="buckets">
+  <div class="sec-band">
+    <div class="sec-head reveal">
+      <p class="kicker">Four buckets</p>
+      <h2>One wallet, four budgets that cannot borrow from each other.</h2>
+      <p class="lede">Each strategy spends its own allocation and nothing else. A bad week for one is a bad week for one.</p>
+    </div>
+    <div class="bucket-grid">
+      <div class="bucket reveal" style="--pct:30">
+        <div class="bucket-top"><b>Copy Trading</b><span class="mono">30%</span></div>
+        <div class="bucket-bar"><i></i></div>
+        <p>Follows wallets with a record worth copying, and rates that record before it copies anything.</p>
+      </div>
+      <div class="bucket reveal" style="--pct:30">
+        <div class="bucket-top"><b>Hot Trading</b><span class="mono">30%</span></div>
+        <div class="bucket-bar"><i></i></div>
+        <p>Scans every three minutes for unusual volume and real momentum. Most scans end with nothing, which is the point.</p>
+      </div>
+      <div class="bucket reveal" style="--pct:25">
+        <div class="bucket-top"><b>Hidden Gems</b><span class="mono">25%</span></div>
+        <div class="bucket-bar"><i></i></div>
+        <p>Looks for growing holders and growing volume on tokens the market has not repriced yet.</p>
+      </div>
+      <div class="bucket reveal" style="--pct:15">
+        <div class="bucket-top"><b>Low Market Cap</b><span class="mono">15%</span></div>
+        <div class="bucket-bar"><i></i></div>
+        <p>The smallest budget for the largest risk. Stricter security, stricter liquidity, tighter stops.</p>
+      </div>
+    </div>
+    <figure class="shot inset reveal">
+      <img src="assets/section-ring.jpg" alt="" loading="lazy" decoding="async" width="1600" height="900" />
+    </figure>
+    <p class="note reveal">Change the split whenever you like. The console refuses anything that does not total 100, and only uninvested cash moves.</p>
+  </div>
+</section>
+
+<section class="sec" id="agents">
+  <div class="sec-head reveal">
+    <p class="kicker">The five</p>
+    <h2>Four of them trade. One reads the room. None of them can overrule the gate.</h2>
+  </div>
+  <div class="agent-grid">
+    <article class="agent reveal"><span class="agent-n mono">01</span><h3>Copy Trade</h3><p>Tracks wallets, scores them on win rate, average return, drawdown and consistency, and flags the ones whose timing looks like a bot. A leader you cannot realistically follow is worth nothing.</p></article>
+    <article class="agent reveal"><span class="agent-n mono">02</span><h3>Hidden Gem</h3><p>Market cap, liquidity, volume growth, holder growth, wallet spread, token age, smart money. Every gem it surfaces says why it was picked and what worried it.</p></article>
+    <article class="agent reveal"><span class="agent-n mono">03</span><h3>Hot Trade</h3><p>Runs every three minutes. Volume spikes measured against the token's own baseline, not against other tokens. It refuses to chase something that has already run.</p></article>
+    <article class="agent reveal"><span class="agent-n mono">04</span><h3>Small Market Cap</h3><p>The strictest of the four. It will not trade a token whose holder distribution it cannot see, because that is the exact situation it exists to avoid.</p></article>
+    <article class="agent reveal accent"><span class="agent-n mono">05</span><h3>Social Intelligence</h3><p>Mentions, sentiment, trend and source quality, plus a spam score whose whole job is to stop bought hype reading as demand. It scores tokens for the other four and never trades itself.</p></article>
+  </div>
+
+  <div class="gate-block reveal">
+    <img class="gate-shot" src="assets/section-core.jpg" alt="" loading="lazy" decoding="async" width="1600" height="900" />
+    <div>
+      <p class="kicker">And the gate</p>
+      <h3>Token Security</h3>
+      <p>Contract authorities, taxes, transfer limits, liquidity locks, holder concentration, wash
+      trading, copycat symbols. It holds the blacklist and it has a veto over all five.</p>
+      <p class="note">It is not on a schedule like the others. It runs before every single trade,
+      and again inside the pipeline, because time passes between an agent liking a token and the
+      money actually moving.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="try">
+  <div class="sec-band">
+    <div class="sec-head reveal">
+      <p class="kicker">Try it</p>
+      <h2>Hold the button and push a token through the gate.</h2>
+      <p class="lede">This is the same order of checks the real pipeline runs. Let go early and it eases back, exactly like a signal that never made it.</p>
+    </div>
+    <div class="gate reveal">
+      <div class="gate-stages" id="gateStages">
+        <div class="gate-stage" data-at="0.18"><b>Agent</b><span>Signal raised</span></div>
+        <div class="gate-stage" data-at="0.40"><b>Security</b><span>Contract clean</span></div>
+        <div class="gate-stage" data-at="0.62"><b>Risk</b><span>Size cut to $180</span></div>
+        <div class="gate-stage" data-at="0.82"><b>Portfolio</b><span>Bucket has cash</span></div>
+        <div class="gate-stage" data-at="1"><b>Execution</b><span>Filled on paper</span></div>
+      </div>
+      <div class="gate-track"><i id="gateFill"></i></div>
+      <button class="btn btn-primary gate-btn" id="gateBtn" type="button" aria-describedby="gateHint">
+        Hold to run the gate
+      </button>
+      <p class="note" id="gateHint">Nothing here touches a real wallet.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="safety">
+  <div class="sec-head reveal">
+    <p class="kicker">Safety</p>
+    <h2>The boring parts are the ones that matter.</h2>
+  </div>
+  <div class="cards k3">
+    <article class="card reveal"><h3>Paper is the default</h3><p>Live trading needs two independent switches: the configuration set to live, and a confirmation phrase in your environment file. Either one alone keeps it on paper.</p></article>
+    <article class="card reveal"><h3>Nothing succeeds until it is confirmed</h3><p>A live trade is not reported as filled until the transaction is confirmed on chain. A submitted-but-unconfirmed send opens no position.</p></article>
+    <article class="card reveal"><h3>Your keys stay yours</h3><p>The private key is read from your environment, held in memory, and never written to the database, the logs, the API or the screen.</p></article>
+    <article class="card reveal"><h3>A kill switch that does one thing</h3><p>It stops new positions instantly. It deliberately does not force-sell, because a panic button that dumps into a thin market can cost more than the thing it was pressed for.</p></article>
+    <article class="card reveal"><h3>Limits that shrink before they refuse</h3><p>Position size, bucket exposure, total exposure, daily loss, single token concentration, pool share. An oversized trade gets cut down rather than thrown away.</p></article>
+    <article class="card reveal"><h3>It runs on your machine</h3><p>A local database, a local API bound to localhost, and free data tiers. Nothing is sent anywhere you did not configure.</p></article>
+  </div>
+</section>
+
+<section class="sec cta-sec">
+  <div class="cta-card reveal">
+    <div class="cta-bg" aria-hidden="true"></div>
+    <h2>Start it in paper mode and watch a week go by.</h2>
+    <p class="lede">Six agents scanning, most cycles ending in nothing, every refusal written down with its reason. Then decide whether you want it spending real money.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary btn-lg" href="/app/">Open the console</a>
+      <a class="btn btn-ghost btn-lg" href="https://github.com/adnanmasood/fintech-samples/tree/main/student-projects/solana-trading-bot-538bd7">Read the code</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div>
+      <div class="nav-brand"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><circle class="mark-core" cx="12" cy="12" r="2.6"/><g class="mark-spokes"><line x1="12" y1="12" x2="20" y2="12"/><line x1="12" y1="12" x2="16" y2="19"/><line x1="12" y1="12" x2="8" y2="19"/><line x1="12" y1="12" x2="4" y2="12"/><line x1="12" y1="12" x2="8" y2="5"/><line x1="12" y1="12" x2="16" y2="5"/></g><g class="mark-nodes"><circle cx="20" cy="12" r="1.7"/><circle cx="16" cy="19" r="1.7"/><circle cx="8" cy="19" r="1.7"/><circle cx="4" cy="12" r="1.7"/><circle cx="8" cy="5" r="1.7"/><circle cx="16" cy="5" r="1.7"/></g></svg><span>USF</span></div>
+      <p class="note">A multi-agent trading platform for Solana. Runs on your own machine.</p>
+    </div>
+    <div class="foot-links">
+      <a href="#how">How it works</a>
+      <a href="#agents">Agents</a>
+      <a href="#safety">Safety</a>
+      <a href="/app/">Console</a>
+    </div>
+  </div>
+  <p class="build" id="build" hidden></p>
+  <p class="disclaimer">
+    The imagery on this page is AI generated. This software is a personal research project, not financial
+    advice and not an invitation to invest. Automated trading can lose money quickly, and small-cap crypto
+    tokens can lose all of it. Run it on paper until you understand what it does.
+  </p>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

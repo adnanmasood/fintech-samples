@@ -1,0 +1,31 @@
+{
+  "name": "usf-solana-trading-bot",
+  "private": true,
+  "version": "0.2.0",
+  "description": "Multi-agent Solana trading platform with paper and live execution",
+  "license": "MIT",
+  "workspaces": [
+    "apps/server",
+    "apps/dashboard"
+  ],
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "setup": "npm install && npm run migrate",
+    "migrate": "npm -w @usf/server run migrate",
+    "dev": "npm -w @usf/dashboard run build && concurrently -n server,console -c cyan,magenta \"npm -w @usf/server run dev\" \"npm -w @usf/dashboard run dev\"",
+    "dev:server": "npm -w @usf/server run dev",
+    "dev:dashboard": "npm -w @usf/dashboard run dev",
+    "build": "npm -w @usf/dashboard run build && npm -w @usf/server run build",
+    "start": "npm -w @usf/server run start",
+    "test": "npm -w @usf/server run test",
+    "test:watch": "npm -w @usf/server run test:watch",
+    "typecheck": "npm -w @usf/server run typecheck && npm -w @usf/dashboard run typecheck",
+    "lint": "npm run typecheck",
+    "dev:hmr": "concurrently -n server,console -c cyan,magenta \"npm -w @usf/server run dev\" \"npm -w @usf/dashboard run dev:hmr\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
