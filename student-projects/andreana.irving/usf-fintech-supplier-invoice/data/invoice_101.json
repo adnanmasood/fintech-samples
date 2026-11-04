@@ -1,0 +1,6 @@
+{
+  "supplier_id": "S01",
+  "invoice_number": "INV-101",
+  "amount_cents": 100000,
+  "filename": "invoice_101.json"
+}
