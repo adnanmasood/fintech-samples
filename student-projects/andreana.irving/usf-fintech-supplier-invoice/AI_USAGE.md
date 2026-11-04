@@ -1,6 +1,6 @@
 # AI Usage Record
 
-**Author:** Andreana Irving (andreanairving@usf.edu)
+**Author:** Andreana Irving 
 **Tool:** Claude Code, model Claude Sonnet 5 (`claude-sonnet-5`) — used for all file generation in this project
 **Also used:** Claude, in a separate chat — as a step-by-step guide for terminal commands, approval decisions, and checking my screenshots against the guide
 **Project:** Supplier Invoice Approval System (`usf-fintech-supplier-invoice`)
