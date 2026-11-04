@@ -1,0 +1,10 @@
+{
+  "note": "Fictional data only.",
+  "initial_balances": {"A": 10000, "B": 2000},
+  "example_requests": [
+    {"request_id": "R001", "sender": "A", "recipient": "B", "amount_cents": 5000, "currency": "USD"},
+    {"request_id": "R002", "sender": "B", "recipient": "A", "amount_cents": 1500, "currency": "USD"},
+    {"request_id": "R003", "sender": "A", "recipient": "B", "amount_cents": 10001, "currency": "USD"},
+    {"request_id": "R004", "sender": "A", "recipient": "A", "amount_cents": 100, "currency": "USD"}
+  ]
+}
