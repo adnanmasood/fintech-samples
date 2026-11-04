@@ -30,8 +30,8 @@ from auth import get_current_user
 
 client = TestClient(app_module.app)
 
-CLAIMANT = {"id": 1, "email": "claimant", "name": "Casey Claimant"}
-OTHER_CLAIMANT = {"id": 2, "email": "other", "name": "Other Person"}
+CLAIMANT = {"id": 1, "email": "claimant@example.com", "name": "Casey Claimant"}
+OTHER_CLAIMANT = {"id": 2, "email": "other@example.com", "name": "Other Person"}
 
 
 def setup_function(_):
@@ -90,9 +90,9 @@ def test_signed_out_new_claim_form_redirects_to_login_on_submit():
 
 def test_first_login_creates_an_account_behind_the_scenes():
     storage.reset()
-    assert storage.get_user("new-person") is None
-    storage.get_or_create_user("new-person", "New Person")
-    assert storage.get_user("new-person") is not None
+    assert storage.get_user("new-person@example.com") is None
+    storage.get_or_create_user("new-person@example.com", "New Person")
+    assert storage.get_user("new-person@example.com") is not None
 
 
 def test_signed_in_homepage_shows_the_submission_form():
@@ -191,6 +191,27 @@ def test_created_adjuster_password_is_random_and_only_returned_once():
     password_b = storage.create_adjuster("adjuster.b")
     assert password_a != password_b
     assert len(password_a) >= 12
+
+
+def test_reset_adjuster_password_changes_which_password_works():
+    old_password = storage.create_adjuster("rotate.test", "Rotate Test")
+    new_password = storage.reset_adjuster_password("rotate.test")
+
+    assert new_password is not None
+    assert new_password != old_password
+    assert storage.verify_adjuster("rotate.test", old_password) is None
+    assert storage.verify_adjuster("rotate.test", new_password) is not None
+
+
+def test_reset_adjuster_password_accepts_an_explicit_password():
+    storage.create_adjuster("rotate.explicit")
+    result = storage.reset_adjuster_password("rotate.explicit", password="chosen-value-123")
+    assert result == "chosen-value-123"
+    assert storage.verify_adjuster("rotate.explicit", "chosen-value-123") is not None
+
+
+def test_reset_adjuster_password_on_unknown_username_returns_none():
+    assert storage.reset_adjuster_password("does-not-exist") is None
 
 
 def test_wrong_adjuster_password_is_rejected():
@@ -314,7 +335,7 @@ def test_an_unlinked_adjuster_is_unaffected_by_the_conflict_check():
 
     # Linked to a *different* email than the claimant who filed this one --
     # the check should only ever fire on an exact match, never adjacent cases.
-    password = storage.create_adjuster("unrelated", linked_claimant_email="someone-else")
+    password = storage.create_adjuster("unrelated", linked_claimant_email="someone-else@example.com")
     login_as_adjuster("unrelated", password)
 
     allowed = client.post(
@@ -373,7 +394,7 @@ def test_mock_extraction_finds_facts_in_an_uploaded_text_document():
     assert "2026-07-08" in result.text
     assert "Fire" in result.text
     assert "Water damage" in result.text
-    assert "MOCK" in result.text  # never presented as if it were real AI
+    assert "not AI-generated" in result.text  # never presented as if it were real AI
 
 
 def test_mock_summary_is_generated_on_submission():
@@ -390,6 +411,41 @@ def test_mock_summary_is_generated_on_submission():
     assert record["summary"] is not None
     assert "POL-SUMMARY" in record["summary"]["summary_text"]
     assert "Garage theft" in record["summary"]["summary_text"]
+
+
+def test_summary_names_a_missing_incident_date_instead_of_leaving_a_blank():
+    login_as_claimant(CLAIMANT)
+    response = submit(
+        policy_id="POL-NODATE",
+        incident_date="",
+        description="Kitchen fire.",
+        files=[("notes.txt", b"Fire in kitchen.")],
+    )
+    claim_id = response.headers["location"].rsplit("/", 1)[-1]
+
+    text = storage.get_claim(claim_id)["summary"]["summary_text"]
+    assert "[incident date not provided]" in text
+    assert "incident reported ." not in text
+
+
+def test_summary_states_when_no_documents_were_provided():
+    from summary import generate_summary
+
+    text = generate_summary(
+        {"policy_id": "POL-1", "incident_date": "2026-08-01", "description": "x", "documents": []},
+        facts=[],
+    )
+    assert "Documents on file: none provided." in text
+
+
+def test_summary_states_a_blank_description_as_not_provided():
+    from summary import generate_summary
+
+    text = generate_summary(
+        {"policy_id": "POL-1", "incident_date": "2026-08-01", "description": "   ", "documents": ["a.pdf"]},
+        facts=[],
+    )
+    assert "Claimant's description: not provided." in text
 
 
 def test_submission_creates_notifications_on_both_mock_channels():

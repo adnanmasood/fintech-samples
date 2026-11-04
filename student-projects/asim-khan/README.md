@@ -3,6 +3,50 @@
 USF FIN 6934 (AI in Finance), System Design Studio — Assignment 7. HarborClaim is a
 fictional insurtech startup; this is my take-home build for its claim intake system.
 
+## What's actually being submitted for Assignment 7
+
+**[`claim-intake-streamlit/`](claim-intake-streamlit/) is the standalone Assignment 7
+submission** — it implements the build guide's own literal, scored spec: a one-screen
+Streamlit app, `check_claim(claim) -> {status, missing}`, no database, no auth, no file
+uploads, its own 11 tests (`tests/test_logic.py`), two screenshots, its own `README.md` and
+`AI_USAGE.md`. It's self-contained and doesn't depend on anything below this line.
+
+Everything else in this project folder — `main.py`/`test_main.py` at the root, and the full
+FastAPI web app around them — is a larger, separate build that grew out of the same
+assignment. It's not part of what's being scored here; see "Tech stack, and why" below for
+why it exists alongside the literal submission instead of replacing it.
+
+**Test counts, since there are four separate suites in this folder and it's easy to
+conflate them:**
+
+| Suite | Count | What it tests |
+|---|---|---|
+| `claim-intake-streamlit/tests/test_logic.py` | **11** | The Assignment 7 submission's own suite — `check_claim`, run with `unittest`. |
+| `test_main.py` (this folder's root) | 5 | `main.py`, the original console checker the FastAPI app imports. An earlier, simpler version of the same check -- its document rule only requires a non-empty list, not a nonblank label. |
+| `tests/test_app.py` (this folder's root) | 44 | The FastAPI web app — routes, auth, storage, separation of duties, etc. |
+| `tests/test_ui.py` (this folder's root) | 7 | Real-browser (Playwright) tests against the FastAPI web app. |
+
+Only the first row is part of the Assignment 7 submission; the other three test the larger,
+separate build described above.
+
+**System design exercise:** the high-level architecture (8 components, with diagrams) and the
+answer to the pressure test — what happens when an AI summary disagrees with the source
+evidence or omits a fact — are in [`docs/design/DESIGN.md`](docs/design/DESIGN.md).
+
+## Live demo (the larger build, not the graded submission)
+
+- **Claimant view:** <https://harborclaim-demo-2630.azurewebsites.net> — Google sign-in, in
+  OAuth Testing mode, so only accounts added as Test users can sign in.
+- **Adjuster view:** <https://harborclaim-demo-2630.azurewebsites.net/adjuster/login> —
+  username `demo.adjuster`.
+
+The adjuster password is never committed: the repo is public, and the build guide says not
+to include passwords. Both the username and password come from Azure App Service settings
+(`DEMO_ADJUSTER_USERNAME`, `DEMO_ADJUSTER_PASSWORD`). On every startup the app re-applies
+the current password, so rotating it is just changing that setting. The password is shared
+privately on request, and rotated after it has been sent anywhere it can't be taken back
+from, such as an email.
+
 ## Quick start (run the full web app)
 
 The graded minimum (`main.py`) needs nothing but Python — see "Run it" below. This is
@@ -160,6 +204,40 @@ reasons, not just "it's what was already installed":**
   (more processes/containers behind a load balancer) — nothing is given up by choosing
   Python over Node for this.
 
+### A note on the assignment brief's own stack choice
+
+The brief itself specifies a one-screen Streamlit app, not FastAPI + Jinja2. I kept FastAPI as
+the primary build and added [`claim-intake-streamlit/`](claim-intake-streamlit/) as a
+standalone subfolder implementing the brief's literal, scored shape instead — not as a
+compromise, but because the two serve different purposes:
+
+- **Same-language reuse, lost if the whole project moved to Streamlit.** `app.py` (FastAPI)
+  imports `check_claim` directly from `main.py` — no network call, no serialization boundary.
+  `claim-intake-streamlit/logic.py` is a clean-room reimplementation of the same contract
+  specifically because the brief's own folder structure asks for a standalone app; that
+  duplication is a one-time cost for satisfying the assignment literally, not something I'd
+  want across the whole product.
+- **Two-role auth and separation of duties.** The real build has two distinct identities —
+  claimant (Google OAuth) and adjuster (provisioned username/password) — with different
+  permissions, different routes, and different screens per role. That's a core requirement of
+  the larger project (see "Claimant and adjuster pages are fully separate routes" above).
+  Streamlit's session model is built around one user per session; expressing clean role
+  separation, two distinct login flows, and persistent per-role views would mean working
+  against the framework rather than with it. FastAPI + Jinja2 gives direct control over
+  routing and session state per role.
+- **Persistent storage, document upload, and notifications.** The full build already has
+  SQLite-backed storage, real document uploads, and a notification feed — all explicitly out
+  of scope for the assignment's own minimum ("no database, no auth, no file uploads"). Those
+  are standard multi-page web-app concerns that a bare one-screen Streamlit app isn't built to
+  carry.
+- **Already deployed as a standard ASGI web app.** The FastAPI build runs on Azure App Service
+  behind Uvicorn, with HTTPS and OAuth redirect handling already solved. Streamlit has its own
+  deployment model (Streamlit Community Cloud, or `streamlit run` behind a reverse proxy) —
+  switching the primary build to it would mean re-solving deployment for no functional gain.
+
+`claim-intake-streamlit/` exists specifically so the brief's literal, scored shape is satisfied
+on its own terms, without compromising or rewriting the larger build around it.
+
 ### Set up the web UI
 
 ```bash
@@ -292,7 +370,7 @@ required, just convenient during development.
 .venv/Scripts/python.exe -m pytest tests/test_app.py -v
 ```
 
-38 tests. No real Google login is needed to run them — claimant login is faked
+44 tests. No real Google login is needed to run them — claimant login is faked
 with FastAPI's `dependency_overrides` on `get_current_user`, the standard way
 to test routes behind auth. Adjuster login is tested for real, not faked —
 `storage.create_adjuster` generates a real account and the tests actually
@@ -346,6 +424,12 @@ Only claimant-related UI tests need `SESSION_SECRET_KEY` in `.env` (the same
 signed-cookie technique the documentation screenshots use) — not real Google
 OAuth credentials, so this suite runs even without ever completing the
 Google Cloud Console setup.
+
+### System design
+
+[`docs/design/DESIGN.md`](docs/design/DESIGN.md) has the high-level architecture (8
+components, with diagrams) and the answer to the design exercise's pressure test: what
+happens when an AI summary disagrees with the source evidence or omits a fact.
 
 ### Screenshots
 
