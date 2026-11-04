@@ -39,7 +39,7 @@ asks, and it returns paper unless both agree.
 | Key | Default | Meaning |
 |---|---|---|
 | `maxPositionPctOfBucket` | 20 | Largest position as a share of its bucket |
-| `maxPositionUsd` | 500 | Hard ceiling on one trade |
+| `maxPositionUsd` | 250 | Hard ceiling on one trade |
 | `minPositionUsd` | 10 | Below this a trade is not worth making |
 | `maxBucketExposurePct` | 80 | Most of a bucket that may be invested at once |
 | `maxTotalExposurePct` | 70 | Most of the portfolio that may be invested at once |

@@ -76,7 +76,7 @@ export const DEFAULT_CONFIG: TradingConfig = {
   },
   risk: {
     maxPositionPctOfBucket: 20,
-    maxPositionUsd: 500,
+    maxPositionUsd: 250,
     minPositionUsd: 10,
     maxBucketExposurePct: 80,
     maxTotalExposurePct: 70,

@@ -65,7 +65,7 @@ Both cases were run on a clean database, in paper mode, with no API keys and no 
   against public DexScreener data.
 - **Expected:** tokens are screened, those that fail are refused with a reason, and no
   real money or wallet is involved.
-- **Observed:** Hot Trade scanned 54 tokens, Hidden Gem 52 and Small Market Cap 52. All
+- **Observed:** Hot Trade scanned 55 tokens, Hidden Gem 53 and Small Market Cap 53. All
   were filtered, producing 0 signals and 0 trades, with reasons in the decision log. The
   portfolio stayed at $10,000. Small Market Cap and Copy Trade reported themselves as
   degraded because no on-chain provider was configured. Results depend on live market
@@ -114,12 +114,25 @@ reporting a market cap that is not credible. Examples appear in the Ingest colum
 Actual results from this submission's code:
 
 ```text
-npm test            Test Files 10 passed (10), Tests 116 passed (116)
+npm test            Test Files 10 passed (10), Tests 117 passed (117)
 npm run typecheck   server and dashboard, no errors
 ```
 
-**Small modification:** _TO BE COMPLETED BY THE AUTHOR: the change, why it was made, and
-the check that verifies it._
+**Small modification:** the default hard ceiling on a single trade, `risk.maxPositionUsd`,
+was lowered from $500 to $250 in `apps/server/src/config/defaults.ts`.
+
+- **Why:** to limit how much one bad trade can cost. A $500 position is 5% of the $10,000
+  paper balance, and $250 is 2.5%. At $250 the ceiling also matches the largest default agent
+  request, so raising an agent's own `maxTradeUsd` cannot push a trade above it.
+- **Behavior:** an oversized request is shrunk to the cap rather than refused. With default
+  settings, agents already request $250 or less, so typical trade sizes do not change. The
+  cap is a backstop.
+- **Check:** tests in `apps/server/test/portfolio-risk.test.ts` confirm the default is 250, a
+  $250 request stays at $250, a $251 request becomes $250, a $99,999 request becomes $250, and
+  a $100 request stays at $100. Run against the old $500 value, two of these tests failed with
+  `expected 500 to be 250`, and all 117 passed after the change.
+- **Existing installs:** a configuration already saved in a local database takes priority over
+  this default. Change it in Settings → Risk limits, or start with a new database.
 
 ## Limits and AI assistance
 

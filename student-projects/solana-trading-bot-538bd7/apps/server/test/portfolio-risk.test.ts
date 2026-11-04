@@ -135,8 +135,26 @@ describe('risk manager', () => {
     try {
       const decision = app.risk.evaluate(makeSignal({ requestedSizeUsd: 99_999 }), makeMarket());
       expect(decision.approved).toBe(true);
-      // Capped by maxPositionUsd of 500.
-      expect(decision.approvedSizeUsd).toBeLessThanOrEqual(500);
+      // Capped by maxPositionUsd of 250.
+      expect(decision.approvedSizeUsd).toBe(250);
+      const cap = decision.checks.find((c) => c.code === 'MAX_POSITION_USD');
+      expect(cap?.limit).toBe(250);
+    } finally {
+      await app.shutdown();
+    }
+  });
+
+  it('defaults the hard position cap to 250 and enforces it at the boundary', async () => {
+    const app = makeTestApp();
+    try {
+      expect(app.config.get().risk.maxPositionUsd).toBe(250);
+      const atCap = app.risk.evaluate(makeSignal({ requestedSizeUsd: 250 }), makeMarket());
+      expect(atCap.approvedSizeUsd).toBe(250);
+      const overCap = app.risk.evaluate(makeSignal({ requestedSizeUsd: 251 }), makeMarket());
+      expect(overCap.approved).toBe(true);
+      expect(overCap.approvedSizeUsd).toBe(250);
+      const underCap = app.risk.evaluate(makeSignal({ requestedSizeUsd: 100 }), makeMarket());
+      expect(underCap.approvedSizeUsd).toBe(100);
     } finally {
       await app.shutdown();
     }
