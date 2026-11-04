@@ -1,0 +1,41 @@
+{
+  "_note": "All names and dates are fictional classroom examples. extracted_id is mock JSON standing in for a document extractor; it is not OCR and not verified identity.",
+  "scenarios": {
+    "pass": {
+      "label": "Pass: matching records",
+      "expected": {"status": "READY_FOR_VERIFICATION", "reasons": []},
+      "signup": {"full_name": "Dana Lee", "date_of_birth": "1999-04-12"},
+      "extracted_id": {"full_name": "Dana Lee", "date_of_birth": "1999-04-12"}
+    },
+    "fail": {
+      "label": "Fail: ID date of birth missing",
+      "expected": {"status": "REVIEW", "reasons": ["MISSING_ID_DOB"]},
+      "signup": {"full_name": "Dana Lee", "date_of_birth": "1999-04-12"},
+      "extracted_id": {"full_name": "Dana Lee", "date_of_birth": ""}
+    },
+    "under_review": {
+      "label": "Under review: name conflict",
+      "expected": {"status": "REVIEW", "reasons": ["NAME_MISMATCH"]},
+      "signup": {"full_name": "Dana Lee", "date_of_birth": "1999-04-12"},
+      "extracted_id": {"full_name": "Dana Li", "date_of_birth": "1999-04-12"}
+    },
+    "normalization": {
+      "label": "Modification: ' DANA LEE ' on the ID",
+      "expected": {"status": "READY_FOR_VERIFICATION", "reasons": []},
+      "signup": {"full_name": "Dana Lee", "date_of_birth": "1999-04-12"},
+      "extracted_id": {"full_name": " DANA LEE ", "date_of_birth": "1999-04-12"}
+    },
+    "dob_mismatch": {
+      "label": "Under review: date of birth conflict",
+      "expected": {"status": "REVIEW", "reasons": ["DOB_MISMATCH"]},
+      "signup": {"full_name": "Dana Lee", "date_of_birth": "1999-04-12"},
+      "extracted_id": {"full_name": "Dana Lee", "date_of_birth": "1999-04-21"}
+    },
+    "invalid_date": {
+      "label": "Fail: impossible calendar date",
+      "expected": {"status": "REVIEW", "reasons": ["INVALID_SIGNUP_DOB"]},
+      "signup": {"full_name": "Dana Lee", "date_of_birth": "1999-02-30"},
+      "extracted_id": {"full_name": "Dana Lee", "date_of_birth": "1999-04-12"}
+    }
+  }
+}
