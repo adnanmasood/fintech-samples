@@ -45,15 +45,17 @@ Project 0 is the instructor reference implementation. Projects 1–8 summarize t
 |---|---|---|
 | 0 | [**Payment Rails Live**](student-projects/project-0-payment-rails/) | Trace a fictional card payment through six participants and authorization, capture, clearing, and settlement. A local Python simulator makes messages, balances, retries, and illustrative fees visible. |
 | 1 | [**Loan Application System**](student-projects/ahmad-abuadas/) | Validate application evidence and income consistency before applying a mock lending policy. Present an approval or review outcome with clear reasons, including missing documents and unavailable scores. |
-| 2 | **Digital Wallet Transfer System** | Transfer fictional funds between wallets while preserving total balances. Validate requests, prevent duplicate transfers, detect conflicting retries, and display a transaction receipt. |
-| 3 | [**Card Payment Fraud Screening System**](student-projects/huei-en-cho/) | Apply an ordered policy to fictional card transactions using blocked-card checks and mock risk scores. Explain approval, challenge, or decline decisions and handle unavailable models. |
-| 4 | **Bank Account Onboarding System** | Compare fictional signup information with mock identity-document records. Detect missing fields and name or birth-date mismatches, then identify records ready for external verification. |
-| 5 | **Supplier Invoice Approval System** | Validate fictional invoice metadata and prevent duplicate intake using supplier and invoice identifiers. Create unique records pending approval while preserving the original invoice on resubmission. |
-| 6 | **Personal Budget Assistant** | Categorize fictional purchases from a CSV using transparent merchant rules and exact monetary arithmetic. Report category totals and reject invalid rows with useful explanations. |
-| 7 | **Insurance Claim Intake System** | Check fictional claims for required facts and evidence labels. List missing information and identify complete cases ready for adjuster review. |
-| 8 | **Investment Research Assistant** | Search a controlled collection of fictional reports and return matching evidence with file-and-line citations. Distinguish absent matches from unavailable searches. |
+| 2 | [**Digital Wallet Transfer System**](student-projects/eli-campbell/usf-fintech-digital-wallet/) | Transfer fictional funds between wallets while preserving total balances. Validate requests, prevent duplicate transfers, detect conflicting retries, and display a transaction receipt. |
+| 3 | [**Card Payment Fraud Screening System**](student-projects/card-fraud-screening-7f3c2a/) | Apply an ordered policy to fictional card transactions using blocked-card checks and mock risk scores. Explain approval, challenge, or decline decisions and handle unavailable models. |
+| 4 | [**Bank Account Onboarding System**](student-projects/Ethan-Fray/bank-onboarding-checker-461cfa/) | Compare fictional signup information with mock identity-document records. Detect missing fields and name or birth-date mismatches, then identify records ready for external verification. |
+| 5 | [**Supplier Invoice Approval System**](student-projects/andreana.irving/usf-fintech-supplier-invoice/) | Validate fictional invoice metadata and prevent duplicate intake using supplier and invoice identifiers. Create unique records pending approval while preserving the original invoice on resubmission. |
+| 6 | [**Personal Budget Assistant**](student-projects/personal-budget-c4e81a/) | Categorize fictional purchases from a CSV using transparent merchant rules and exact monetary arithmetic. Report category totals and reject invalid rows with useful explanations. |
+| 7 | [**Insurance Claim Intake System**](student-projects/asim-khan/claim-intake-streamlit/) | Check fictional claims for required facts and evidence labels. List missing information and identify complete cases ready for adjuster review. |
+| 8 | [**Investment Research Assistant**](student-projects/Investment-Research-Assistant-80123c/) | Search a controlled collection of fictional reports and return matching evidence with file-and-line citations. Distinguish absent matches from unavailable searches. |
 
 Browse the [student-projects index](student-projects/README.md) for the instructor sample and the student submissions. The linked student implementations may extend or adapt their course briefs.
+
+**Security:** Student submissions are locally run demonstrations with varying levels of assurance. They are **not hosted by the instructor websites** and should not be deployed with real customer data or funds. The additional [Solana trading-bot prototype](student-projects/solana-trading-bot-538bd7/) includes live-execution and wallet code; use only with explicit review and independent safeguards.
 
 ## Run locally
 
