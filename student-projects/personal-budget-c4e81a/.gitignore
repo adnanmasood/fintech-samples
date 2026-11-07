@@ -1,0 +1,9 @@
+# Generated local state — never publish transactions or edits from a live session.
+var/
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+!.env.example
+*.log
