@@ -1,0 +1,45 @@
+# secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.secret-key
+wallet.json
+keypair.json
+
+# dependencies
+node_modules/
+.npm/
+
+# build output
+dist/
+build/
+apps/dashboard/dist/
+*.tsbuildinfo
+
+# database
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# logs
+logs/
+*.log
+npm-debug.log*
+
+# generation working files, never shipped. The processed media under
+# site/assets is committed on purpose so the page works on a fresh clone.
+review/
+raw/
+
+# tooling
+coverage/
+.vitest/
+.DS_Store
+.idea/
+.vscode/
