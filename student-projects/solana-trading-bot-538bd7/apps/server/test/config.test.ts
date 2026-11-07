@@ -94,6 +94,20 @@ describe('configuration', () => {
     }
   });
 
+  it('does not arm live execution with a wallet alone', async () => {
+    const app = makeTestApp();
+    try {
+      app.config.setWalletProbe(() => true);
+      app.config.update({ mode: 'live' });
+      // A local classroom install starts with LIVE_TRADING_OPT_IN=disabled.
+      expect(app.config.effectiveMode()).toBe('paper');
+      expect(app.config.isLiveRequestedButNotArmed()).toBe(true);
+      expect(app.liveExecutor.preflight().problems.join(' ')).toMatch(/operator opt-in/);
+    } finally {
+      await app.shutdown();
+    }
+  });
+
   it('notifies listeners on change', async () => {
     const app = makeTestApp();
     try {
