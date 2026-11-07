@@ -138,8 +138,8 @@ def test_full_claimant_flow_with_a_real_file_upload(page):
     page.wait_for_url(f"{BASE}/claims/*")
 
     assert page.get_by_text("READY_FOR_REVIEW").is_visible()
-    assert page.get_by_text("MOCK -- not AI-generated").is_visible()
-    assert page.get_by_text("MOCK -- plain regex, not AI").is_visible()
+    assert page.get_by_text("Automated draft -- not AI-generated").is_visible()
+    assert page.get_by_text("Automated extraction -- not AI").is_visible()
     # The extraction actually ran, not just the mock label -- a real value
     # pulled from the real sample PDF's text should be in the facts table.
     # "Collision" appears twice on the page (summary prose + facts table),
@@ -215,7 +215,7 @@ def test_claimant_route_is_unreachable_with_only_an_adjuster_session(page):
 
 
 def test_mock_card_text_is_actually_readable_on_the_adjuster_dark_theme(page):
-    """Regression test for a real bug found this session: .mock-card has a
+    """Regression test for a real bug: .mock-card has a
     fixed cream background, and the adjuster theme redefines --ink to a
     near-white meant for a navy background -- combined, the mock card's text
     was nearly invisible. This measures actual rendered contrast instead of
