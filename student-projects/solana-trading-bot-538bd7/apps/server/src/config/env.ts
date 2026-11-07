@@ -38,6 +38,8 @@ const envSchema = z.object({
   DATABASE_URL: z.string().default('file:./data/usf.db'),
 
   TRADING_MODE: z.enum(['paper', 'live']).default('paper'),
+  // A second operator opt-in is required before this classroom build can send real trades.
+  LIVE_TRADING_OPT_IN: z.enum(['disabled', 'I_ACCEPT_REAL_FINANCIAL_RISK']).default('disabled'),
 
   SOLANA_RPC_URL: z.string().url().default('https://api.mainnet-beta.solana.com'),
   SOLANA_RPC_API_KEY: z.string().optional(),

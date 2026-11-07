@@ -24,7 +24,7 @@ async function main(): Promise<void> {
 
   if (app.config.isLiveRequestedButNotArmed()) {
     app.logger.warn(
-      'Live mode is requested in config but no wallet private key is configured, so paper mode is in force.',
+      'Live mode requested but the server operator opt-in or wallet check is not satisfied; paper mode remains active.',
     );
   }
 

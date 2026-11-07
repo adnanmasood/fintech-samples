@@ -31,6 +31,7 @@ Run: uvicorn app:app --reload
 """
 
 import os
+import secrets
 import uuid
 from contextlib import asynccontextmanager
 
@@ -81,9 +82,21 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="HarborClaim -- Claim Intake", lifespan=lifespan)
+# Never sign cookies with a fixed, publicly known demonstration secret.
+# For local evaluation an ephemeral random key is safe (sessions expire on restart).
+# Set SESSION_SECRET_KEY explicitly in a deployed service to keep sessions stable.
+_session_secret = os.environ.get("SESSION_SECRET_KEY")
+if not _session_secret:
+    _session_secret = secrets.token_urlsafe(32)
+    import logging
+    logging.getLogger("uvicorn.error").warning(
+        "SESSION_SECRET_KEY is not set; using an ephemeral signing key. "
+        "Set a persistent high-entropy secret before deployment."
+    )
 app.add_middleware(
     SessionMiddleware,
-    secret_key=os.environ.get("SESSION_SECRET_KEY", "dev-only-insecure-key-change-me"),
+    secret_key=_session_secret,
+    https_only=(bool(os.environ.get("WEBSITE_SITE_NAME")) or os.environ.get("HARBORCLAIM_HTTPS_ONLY") == "1"),
 )
 app.include_router(auth_router)
 app.mount("/static", StaticFiles(directory="static"), name="static")

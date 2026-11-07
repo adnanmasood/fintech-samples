@@ -47,6 +47,10 @@ the current password, so rotating it is just changing that setting. The password
 privately on request, and rotated after it has been sent anywhere it can't be taken back
 from, such as an email.
 
+## Session security
+
+Set a long, random `SESSION_SECRET_KEY` in your environment (and use HTTPS) before deploying. If omitted, the app generates an ephemeral signing key at startup rather than using a publicly known default; existing sessions will be invalidated on restart. Azure App Service uses Secure cookies automatically; for other HTTPS deployments set `HARBORCLAIM_HTTPS_ONLY=1`. This classroom demonstration does not implement production-grade CSRF protection or identity policy and must not handle real customer claims.
+
 ## Quick start (run the full web app)
 
 The graded minimum (`main.py`) needs nothing but Python — see "Run it" below. This is

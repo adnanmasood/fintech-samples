@@ -73,22 +73,16 @@ export class ConfigService {
     this.walletArmed = probe;
   }
 
-  /**
-   * The mode the system will actually trade in.
-   *
-   * Live requires the config to say live AND a wallet private key to be
-   * configured. Either one alone stays paper. There is no separate
-   * confirmation switch: the wallet is the only thing that has to be true, and
-   * the toggle in the dashboard flips this instantly, no restart involved.
-   */
+  /** Live trading requires a wallet AND explicit server-side operator opt-in. */
   effectiveMode(): 'paper' | 'live' {
     if (this.current.mode !== 'live') return 'paper';
+    if (getEnv().LIVE_TRADING_OPT_IN !== 'I_ACCEPT_REAL_FINANCIAL_RISK') return 'paper';
     return this.walletArmed() ? 'live' : 'paper';
   }
 
-  /** True when the config asks for live but no wallet key is configured yet. */
+  /** True when a live request is blocked by the operator opt-in or wallet gate. */
   isLiveRequestedButNotArmed(): boolean {
-    return this.current.mode === 'live' && !this.walletArmed();
+    return this.current.mode === 'live' && this.effectiveMode() !== 'live';
   }
 
   onChange(listener: ConfigListener): () => void {

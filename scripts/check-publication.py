@@ -43,6 +43,15 @@ text_types = {'.py', '.js', '.mjs', '.cjs', '.ts', '.svelte', '.astro', '.md', '
 for p in files:
     rel = p.relative_to(ROOT)
     if p.is_symlink() or any(x in forbidden for x in rel.parts): failures.append(f'{rel}: private path or symlink')
+    # Runtime state and secret material never belong in a public student submission,
+    # even if the particular checked-in example contains only fictional records.
+    if rel.parts[0] == 'student-projects' and (
+        'var' in rel.parts
+        or p.name in {'.secret-key', '.wallet_credentials.json', '.env', 'id_rsa', 'id_ed25519'}
+        or p.suffix.lower() in {'.db', '.sqlite', '.sqlite3', '.pem', '.p12', '.pfx'}
+    ):
+        failures.append(f'{rel}: runtime state, credentials or private key material')
+
     if not args.dist and p.name != '.gitkeep' and (any(x in excluded for x in rel.parts) or p.name == '.DS_Store' or p.name.startswith('.env') and p.name != '.env.example'):
         failures.append(f'{rel}: generated or private artifact')
     if p.suffix in text_types:

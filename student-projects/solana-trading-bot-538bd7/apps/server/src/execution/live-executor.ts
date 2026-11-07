@@ -44,6 +44,9 @@ export class LiveExecutor implements TradeExecutor {
   /** Everything that must be true before a real order can be sent. */
   preflight(): { ok: boolean; problems: string[] } {
     const problems: string[] = [];
+    if (getEnv().LIVE_TRADING_OPT_IN !== 'I_ACCEPT_REAL_FINANCIAL_RISK') {
+      problems.push('Live trading is disabled by the server operator opt-in.');
+    }
     if (this.config.get().mode !== 'live') problems.push('Configuration is not set to live mode.');
     if (!this.wallet.isAvailable()) {
       problems.push(this.wallet.error() ?? 'No wallet private key is configured.');
