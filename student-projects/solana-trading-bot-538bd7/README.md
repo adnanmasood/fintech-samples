@@ -20,7 +20,7 @@ Agent → Signal Engine → Security → Risk Manager → Portfolio → Executio
 
 Agents only produce signals. They cannot execute or reach the wallet, and any
 later gate can stop a trade. The application defaults to paper trading with a
-simulated $10,000 balance. See [docs/OVERVIEW.md](docs/OVERVIEW.md) for the agents,
+simulated $10,000 balance. **Live trading is disabled at the server by default, even if a wallet key is saved and the UI requests live mode.** Explicit operator opt-in is an additional safeguard, not a substitute for authentication, dependency remediation, or an independent security review. See [docs/OVERVIEW.md](docs/OVERVIEW.md) for the agents,
 buckets and safety model, and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the layers.
 
 ## Run and test
