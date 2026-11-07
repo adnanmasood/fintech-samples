@@ -67,3 +67,52 @@ jobs:
       - run: python3 -m unittest discover -s tests -v
       - run: npm run build
       - run: python3 ../../scripts/check-publication.py --dist
+
+  student-python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Test submitted student Python components
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_tests() {
+            local dir="$1"; shift
+            echo "::group::Testing $dir"
+            (cd "$dir" && timeout 90s python3 -m unittest "$@")
+            echo "::endgroup::"
+          }
+          run_tests student-projects/ahmad-abuadas -v
+          run_tests student-projects/huei-en-cho -v
+          run_tests student-projects/card-fraud-screening-7f3c2a discover -s tests -t . -v
+          run_tests student-projects/asim-khan -v
+          run_tests student-projects/asim-khan/claim-intake-streamlit discover -s tests -v
+          run_tests student-projects/personal-budget-c4e81a discover -s tests -v
+          run_tests student-projects/eli-campbell/usf-fintech-digital-wallet discover -s tests -v
+          run_tests student-projects/Investment-Research-Assistant-80123c -v
+          run_tests student-projects/andreana.irving/usf-fintech-supplier-invoice discover -s tests -v
+          run_tests student-projects/Ethan-Fray/bank-onboarding-checker-461cfa discover -s tests -v
+  trading-bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: student-projects/solana-trading-bot-538bd7
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: student-projects/solana-trading-bot-538bd7/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Report unresolved production dependency advisories
+        continue-on-error: true
+        run: npm audit --omit=dev --audit-level=high
