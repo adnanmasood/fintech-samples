@@ -24,7 +24,7 @@
     "test:performance": "node scripts/performance.mjs"
   },
   "dependencies": {
-    "@astrojs/mdx": "8.0.2",
+    "@astrojs/mdx": "8.1.2",
     "@astrojs/starlight": "0.42.4",
     "@astrojs/svelte": "9.0.1",
     "astro": "7.3.5",
