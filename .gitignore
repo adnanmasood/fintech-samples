@@ -24,3 +24,12 @@ source/
 
 !fintech-algorithms/public/python/python_stdlib.zip
 !fintech-algorithms/public/python/libopenblas-0.3.26.zip
+
+# Student projects: generated state and local credentials must not be committed.
+student-projects/**/var/
+student-projects/**/.secret-key
+student-projects/**/.wallet_credentials.json
+student-projects/**/*.db
+student-projects/**/*.db-*
+student-projects/**/*.sqlite
+student-projects/**/*.sqlite3
