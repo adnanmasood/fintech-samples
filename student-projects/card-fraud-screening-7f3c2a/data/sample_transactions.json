@@ -1,0 +1,18 @@
+[
+  {"name": "Normal low-risk case",
+   "transaction": {"transaction_id": "TXN-1001", "amount_cents": 2599, "card_blocked": false, "risk_score": 0.10, "model_timeout": false}},
+  {"name": "Timeout case",
+   "transaction": {"transaction_id": "TXN-1002", "amount_cents": 15000, "card_blocked": false, "risk_score": 0.10, "model_timeout": true}},
+  {"name": "Blocked-card case",
+   "transaction": {"transaction_id": "TXN-1003", "amount_cents": 4200, "card_blocked": true, "risk_score": 0.05, "model_timeout": false}},
+  {"name": "Exact 0.20 boundary",
+   "transaction": {"transaction_id": "TXN-1004", "amount_cents": 8800, "card_blocked": false, "risk_score": 0.20, "model_timeout": false}},
+  {"name": "Exact 0.80 boundary",
+   "transaction": {"transaction_id": "TXN-1005", "amount_cents": 99900, "card_blocked": false, "risk_score": 0.80, "model_timeout": false}},
+  {"name": "Invalid score case",
+   "transaction": {"transaction_id": "TXN-1006", "amount_cents": 5000, "card_blocked": false, "risk_score": 1.1, "model_timeout": false}},
+  {"name": "Blank transaction ID case",
+   "transaction": {"transaction_id": "   ", "amount_cents": 5000, "card_blocked": false, "risk_score": 0.10, "model_timeout": false}},
+  {"name": "Amount zero case",
+   "transaction": {"transaction_id": "TXN-1008", "amount_cents": 0, "card_blocked": false, "risk_score": 0.10, "model_timeout": false}}
+]
