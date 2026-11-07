@@ -1,0 +1,18 @@
+# Weekly dependency updates. Security alerts must also be enabled in repository settings.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/fintech-algorithms"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+  - package-ecosystem: "npm"
+    directory: "/student-projects/solana-trading-bot-538bd7"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
